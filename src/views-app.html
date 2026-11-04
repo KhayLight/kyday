@@ -1,0 +1,41 @@
+<section class="view app-calc-view" data-view="calc" hidden aria-labelledby="app-calc-title">
+  <div class="band"><div class="wrap">
+    <p class="eyebrow">Конструктор старта / ИП + счёт</p>
+    <h1 class="h1" id="app-calc-title">Собрать старт</h1>
+    <p class="lead">Вы выбираете — мы заполняем лист. Стоимость видна сразу.</p>
+    <p class="muted">Это учебный расчёт услуг вымышленного бюро. Налоги, взносы и госпошлина в итог не входят.</p>
+    <div class="app-calc-layout">
+      <form id="app-calc-form" class="app-options" novalidate aria-label="Настройки старта"></form>
+      <aside class="app-preview" aria-label="Ваш лист записи">
+        <div id="app-calc-sheet"></div>
+        <div id="app-calc-total" class="app-total" aria-live="polite" aria-atomic="true"></div>
+        <div class="app-actions"><a class="btn btn-primary" href="#order">Оформить заявку</a><button class="btn btn-ghost" type="button" id="app-calc-reset">Сбросить</button></div>
+      </aside>
+    </div>
+    <div class="app-mobile-summary" aria-label="Итог расчёта"><div id="app-calc-mobile-total" aria-live="polite" aria-atomic="true"></div><a href="#order" class="btn btn-primary">Оформить</a></div>
+  </div></div>
+</section>
+
+<section class="view" data-view="order" hidden aria-labelledby="app-order-title">
+  <div class="band"><div class="wrap app-order-wrap">
+    <p class="eyebrow">От выбора до заявки</p>
+    <h1 class="h1" id="app-order-title">Оформить старт</h1>
+    <p class="muted">Демонстрационная заявка. Используйте вымышленные контакты. Данные никуда не отправляются и исчезнут после перезагрузки.</p>
+    <div id="app-order-root"></div>
+  </div></div>
+</section>
+
+<section class="view" data-view="cabinet" hidden aria-labelledby="app-cabinet-title">
+  <div class="band"><div class="wrap">
+    <div class="app-section-head"><div><p class="eyebrow">Без логина и пароля</p><h1 class="h1" id="app-cabinet-title">Демо-кабинет</h1></div><button type="button" class="btn btn-ghost" id="app-demo-reset">Сбросить демо</button></div>
+    <p class="muted">Здесь можно пройти весь путь и попробовать функции. Все документы и операции — образцы.</p>
+    <div id="app-cabinet-root"></div>
+    <div id="app-document-modal" class="app-modal" hidden>
+      <div class="app-dialog" role="dialog" aria-modal="true" aria-labelledby="app-document-title" tabindex="-1">
+        <div class="app-section-head"><h2 class="h3" id="app-document-title">Образец документа</h2><button class="btn btn-ghost" type="button" id="app-document-close">Закрыть</button></div>
+        <div id="app-document-content"></div>
+        <p class="muted">Учебный образец. Юридической силы не имеет. Файл не скачивается.</p>
+      </div>
+    </div>
+  </div></div>
+</section>

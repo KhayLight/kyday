@@ -1,0 +1,1453 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Бюро Кудайбердина</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Unbounded:wght@500;600;700&amp;display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #edf0f4; --surface: #fbfcff; --fg: #202737; --muted: #5a667a; --line: #cbd2de;
+  --accent: #3a2fb8; --accent-fg: #ffffff; --mark: #f1ed96; --ok: #28634c; --warn: #994021;
+  --mark-fg: #25251e; --overlay: #141928b8; --shadow: #24325514; --clear: transparent;
+  --font-display: 'Unbounded', 'Arial', sans-serif; --font-body: 'Golos Text', 'Arial', sans-serif; --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #181d29; --surface: #212837; --fg: #e9edf7; --muted: #b0bbce; --line: #414c61;
+    --accent: #b5afff; --accent-fg: #201943; --mark: #e7df8c; --ok: #91d5b4; --warn: #ffb494;
+    --mark-fg: #25251e; --overlay: #070a12cc; --shadow: #00000030; --clear: transparent;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #181d29; --surface: #212837; --fg: #e9edf7; --muted: #b0bbce; --line: #414c61;
+  --accent: #b5afff; --accent-fg: #201943; --mark: #e7df8c; --ok: #91d5b4; --warn: #ffb494;
+  --mark-fg: #25251e; --overlay: #070a12cc; --shadow: #00000030; --clear: transparent;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: 140px; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.65 var(--font-body); font-variant-numeric: tabular-nums; overflow-wrap: break-word; }
+body.modal-open { overflow: hidden; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button, a, input, textarea, select { -webkit-tap-highlight-color: var(--clear); }
+button, a { touch-action: manipulation; }
+button { cursor: pointer; }
+button:disabled { cursor: default; opacity: .55; }
+a { color: var(--accent); text-underline-offset: 4px; }
+a:hover { text-decoration-thickness: 2px; }
+svg { flex-shrink: 0; vertical-align: middle; }
+p { margin: 0 0 1.2em; }
+ul, ol { padding-left: 1.3em; }
+li + li { margin-top: .5em; }
+h1, h2, h3, h4 { margin: 0 0 .7em; line-height: 1.25; text-wrap: balance; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+h1[tabindex="-1"]:focus:not(:focus-visible) { outline: none; }
+::selection { background: var(--mark); color: var(--mark-fg); }
+.wrap { width: min(100%, 1252px); margin-inline: auto; min-width: 0; }
+.band, .site-header { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.band { padding-block: 76px; border-bottom: 1px solid var(--line); }
+.band-surface { background: var(--surface); }
+.band-compact { padding-block: 42px; }
+.h1 { font: 500 clamp(30px, 3.75vw, 52px)/1.18 var(--font-display); letter-spacing: -.055em; }
+.h2 { font: 500 clamp(25px, 2.6vw, 35px)/1.25 var(--font-display); letter-spacing: -.045em; }
+.h3 { font: 600 22px/1.35 var(--font-body); letter-spacing: -.025em; }
+.lead { max-width: 680px; font-size: clamp(18px, 1.7vw, 21px); line-height: 1.6; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.mono { font-family: var(--font-mono); }
+.eyebrow { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; color: var(--muted); font: 500 11px/1.6 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+.eyebrow::before { content: ''; width: 7px; height: 7px; background: var(--accent); flex-shrink: 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 34px; }
+.section-head .h2 { max-width: 750px; margin-bottom: 0; }
+.grid-2, .grid-3 { display: grid; gap: 32px; min-width: 0; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid-2 > *, .grid-3 > * { min-width: 0; }
+.btn { display: inline-flex; justify-content: center; align-items: center; gap: 16px; min-height: 48px; padding: 12px 22px; border: 1px solid var(--accent); border-radius: 2px; background: var(--clear); color: var(--accent); font-size: 14px; font-weight: 600; line-height: 1.4; text-align: center; text-decoration: none; transition: background .15s, transform .15s; }
+.btn:hover { background: var(--surface); text-decoration: none; transform: translateY(-1px); }
+.btn-primary { background: var(--accent); color: var(--accent-fg); }
+.btn-primary:hover { background: var(--accent); opacity: .9; }
+.btn-ghost { border-color: var(--line); color: var(--fg); }
+.btn-small { min-height: 39px; padding: 9px 14px; font-size: 12px; }
+.actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-block: 28px 20px; }
+.text-btn { padding: 0; border: 0; background: var(--clear); color: var(--accent); text-decoration: underline; text-underline-offset: 4px; text-align: left; font-size: inherit; }
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; padding: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); }
+.field { display: grid; gap: 8px; margin-bottom: 20px; }
+.field label, .field > span { font-size: 14px; font-weight: 500; }
+.field input, .field textarea, .field select { width: 100%; min-width: 0; min-height: 48px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); color: var(--fg); }
+.field textarea { min-height: 145px; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); }
+.field input[type="range"] { padding-inline: 0; accent-color: var(--accent); }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--accent); }
+[aria-invalid="true"] { outline: 2px solid var(--warn); outline-offset: 2px; }
+.check { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.6; }
+.check input { width: 18px; height: 18px; margin: 3px 0 0; flex-shrink: 0; }
+.form-error { margin-top: 14px; color: var(--warn); font-size: 13px; }
+.form-error:empty { margin: 0; }
+.table-wrap { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; border-top: 1px solid var(--fg); }
+.table { width: 100%; border-collapse: collapse; text-align: left; }
+.table th, .table td { padding: 20px 18px 20px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.table th { font-size: 13px; color: var(--muted); font-weight: 500; }
+.table td { font-size: 14px; }
+.table .mono { white-space: nowrap; }
+.table-wide { min-width: 650px; }
+.pill { display: inline-flex; align-items: center; min-height: 25px; padding: 3px 8px; border: 1px solid var(--line); font: 11px/1.5 var(--font-mono); }
+.pill-ok { color: var(--ok); border-color: var(--ok); }
+.pill-warn { color: var(--warn); border-color: var(--warn); }
+.stamp { display: inline-block; max-width: 100%; padding: 12px 15px; border: 3px double var(--accent); color: var(--accent); font: 600 clamp(13px, 1.45vw, 20px)/1.4 var(--font-mono); text-align: center; letter-spacing: .04em; transform: rotate(-8deg); }
+.stamp small { display: block; font-size: 10px; letter-spacing: .22em; margin-top: 4px; }
+.sheet { position: relative; padding: 30px; border: 1px solid var(--line); background: var(--surface); box-shadow: 6px 7px 0 var(--shadow); min-width: 0; }
+.sheet-row { display: grid; grid-template-columns: 28px minmax(80px, 1fr) minmax(90px, 1.2fr); gap: 10px; padding: 17px 0; border-bottom: 1px solid var(--line); font-size: 13px; align-items: start; }
+.sheet-row > :first-child { color: var(--muted); font-family: var(--font-mono); font-size: 10px; padding-top: 3px; }
+.sheet-row > :last-child { font-weight: 500; }
+.sheet-head { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 22px; border-bottom: 2px solid var(--fg); font: 11px/1.5 var(--font-mono); }
+.sheet-title { margin: 22px 0 2px; font: 600 20px/1.4 var(--font-body); }
+.sheet-foot { margin-top: 26px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+.sheet-foot > p { max-width: 150px; margin: 0; font-size: 11px; color: var(--muted); }
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-block: 20px; }
+.brand { display: flex; gap: 13px; align-items: center; color: var(--fg); text-decoration: none; flex-shrink: 0; }
+.brand:hover { text-decoration: none; }
+.brand-seal { display: flex; align-items: center; justify-content: center; flex-direction: column; width: 52px; height: 52px; border: 3px double var(--accent); color: var(--accent); transform: rotate(-8deg); font: 600 23px/1 var(--font-mono); }
+.brand-seal span { margin-top: 3px; font-size: 8px; letter-spacing: .2em; }
+.brand-name { font-size: 17px; font-weight: 600; line-height: 1.25; letter-spacing: -.025em; }
+.brand-caption { display: block; margin-top: 7px; color: var(--muted); font: 8px/1.3 var(--font-mono); letter-spacing: .07em; }
+.header-menu { display: flex; flex-direction: column; align-items: flex-end; gap: 13px; }
+.main-nav { display: flex; gap: 23px; }
+.main-nav a, .cabinet-link { color: var(--fg); font-size: 13px; text-decoration: none; }
+.main-nav a[aria-current="page"], .footer-nav a[aria-current="page"] { color: var(--accent); text-decoration: underline; }
+.main-nav a:hover, .cabinet-link:hover { color: var(--accent); }
+.header-tools { display: flex; align-items: center; gap: 20px; }
+.header-phone { font-size: 12px; color: var(--muted); }
+.theme-toggle { display: inline-flex; align-items: center; gap: 6px; padding: 8px 0; border: 0; background: var(--clear); color: var(--muted); font-size: 11px; }
+.menu-toggle { display: none; }
+.hero { padding-top: 56px; padding-bottom: 64px; }
+.hero-grid { display: grid; grid-template-columns: 1.12fr 1fr; gap: clamp(32px, 5vw, 80px); align-items: center; }
+.hero h1 { margin-bottom: 26px; }
+.hero h1 mark { background: var(--mark); color: var(--mark-fg); padding: 0 5px 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hero .lead { font-size: 17px; max-width: 495px; color: var(--muted); }
+.hero-sheet { transform: rotate(1.5deg); }
+.hero-sheet .stamp { margin-top: 8px; }
+.sheet-control { border: 0; padding: 0; width: 100%; min-width: 0; background: var(--surface); color: var(--accent); font: 500 13px var(--font-body); cursor: pointer; }
+.sheet-control-label { color: var(--fg); }
+.hero-facts { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line); }
+.hero-facts div { font-size: 12px; color: var(--muted); }
+.hero-facts strong { display: block; color: var(--fg); font: 500 16px var(--font-mono); margin-bottom: 4px; }
+.hero-caption { margin-top: 22px; margin-bottom: 0; font: 10px/1.7 var(--font-mono); color: var(--muted); }
+.service-item { padding-block: 26px; border-top: 1px solid var(--fg); }
+.service-item .h3 { margin-top: 18px; }
+.service-code { font: 11px var(--font-mono); color: var(--accent); }
+.service-item p { color: var(--muted); font-size: 14px; min-height: 68px; }
+.service-link { display: inline-flex; gap: 12px; font-size: 14px; font-weight: 500; }
+.steps { list-style: none; counter-reset: steps; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.steps li { counter-increment: steps; margin: 0; border-top: 1px solid var(--line); padding-top: 22px; }
+.steps li::before { content: counter(steps, decimal-leading-zero); display: block; margin-bottom: 24px; color: var(--accent); font: 500 15px var(--font-mono); }
+.steps h3 { font-size: 17px; }
+.steps p { color: var(--muted); font-size: 14px; margin: 0; }
+.split { display: grid; grid-template-columns: .8fr 1.2fr; gap: 72px; }
+.callout { padding: 28px; background: var(--surface); border: 1px solid var(--line); }
+.callout p:last-child { margin-bottom: 0; }
+.cta-row { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.cta-row .h2 { max-width: 750px; }
+.cta-row .actions { flex-shrink: 0; }
+.page-intro { padding-bottom: 46px; }
+.page-intro .lead { margin: 0; color: var(--muted); }
+.page-intro .h1 { max-width: 920px; }
+.plan { display: flex; flex-direction: column; border-top: 2px solid var(--fg); padding-top: 24px; }
+.plan.is-featured { border-top-color: var(--accent); }
+.plan-head { min-height: 80px; }
+.plan-price { font: 500 28px/1.4 var(--font-mono); margin-block: 14px 20px; }
+.plan-price small { font: 13px var(--font-body); color: var(--muted); }
+.plan ul { margin-top: 0; margin-bottom: 26px; font-size: 14px; color: var(--muted); }
+.plan .btn { align-self: flex-start; margin-top: auto; }
+.line-list { list-style: none; padding: 0; margin: 0; }
+.line-list li { padding: 20px 0; border-top: 1px solid var(--line); margin: 0; }
+.line-list strong { display: block; margin-bottom: 7px; font-weight: 500; }
+.line-list p { margin: 0; font-size: 14px; color: var(--muted); }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 28px; }
+.tabs button { padding: 11px 17px; border: 1px solid var(--line); color: var(--fg); background: var(--clear); font-size: 13px; }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.tax-panel { max-width: 850px; border-top: 1px solid var(--fg); padding-top: 26px; min-height: 160px; }
+.tax-panel p { color: var(--muted); }
+.faq-list { border-top: 1px solid var(--fg); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary { position: relative; cursor: pointer; list-style: none; padding: 23px 44px 23px 0; font-weight: 500; line-height: 1.5; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: '+'; position: absolute; right: 5px; top: 21px; color: var(--accent); font: 24px var(--font-mono); }
+.faq-item[open] summary::after { content: '−'; }
+.faq-item > div { max-width: 840px; padding-bottom: 22px; color: var(--muted); font-size: 14px; }
+.faq-item > div p:last-child { margin: 0; }
+.faq-search { max-width: 620px; }
+.empty-state { padding: 35px 0; }
+.calculator-output { margin: 18px 0 0; }
+.cost-line { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line); padding: 16px 0; }
+.cost-line strong { font: 500 19px var(--font-mono); }
+.cost-line.is-best { color: var(--accent); }
+.founder-name { font: 500 clamp(30px, 4vw, 50px)/1.25 var(--font-display); letter-spacing: -.05em; }
+.founder-seal { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; width: min(100%, 280px); margin: 25px auto; border: 3px double var(--accent); border-radius: 50%; color: var(--accent); transform: rotate(-12deg); font: 500 80px var(--font-mono); }
+.contacts-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 90px; }
+.contact-block { padding-block: 24px; border-top: 1px solid var(--line); }
+.contact-block p { margin-bottom: 8px; }
+.contact-block .mono { font-size: clamp(17px, 2vw, 23px); }
+.success-box { padding: 25px 0; }
+.success-box .h3 { margin-top: 20px; }
+.site-footer { padding-top: 48px; padding-bottom: max(24px, env(safe-area-inset-bottom, 0px)); border-bottom: 0; }
+.footer-grid { display: grid; grid-template-columns: 1.3fr 1fr .9fr 1.1fr; gap: 35px; }
+.footer-brand { color: var(--fg); font-size: 17px; font-weight: 600; text-decoration: none; }
+.footer-grid p { margin-top: 15px; font-size: 13px; }
+.footer-note { font-size: 9px; color: var(--muted); }
+.footer-nav, .footer-contacts { display: flex; align-items: flex-start; flex-direction: column; gap: 10px; font-size: 12px; }
+.footer-nav a { color: var(--fg); text-decoration: none; }
+.footer-nav a:hover { text-decoration: underline; }
+.footer-contacts .text-btn { font-size: 11px; margin-bottom: 6px; }
+.project-disclaimer { margin: 36px 0 0; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; line-height: 1.7; }
+.modal { position: fixed; inset: 0; z-index: 100; overflow: auto; padding: 32px max(16px, env(safe-area-inset-right, 0px)) 32px max(16px, env(safe-area-inset-left, 0px)); display: grid; place-items: center; }
+.modal-backdrop { position: fixed; inset: 0; background: var(--overlay); }
+.modal-panel { position: relative; width: min(100%, 530px); padding: 38px; border: 1px solid var(--line); background: var(--bg); }
+.modal-close { position: absolute; top: 12px; right: 12px; border: 0; background: var(--clear); }
+.modal-panel .eyebrow { margin-right: 30px; }
+.toast { position: fixed; bottom: max(20px, env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 32px); padding: 15px 22px; background: var(--fg); color: var(--bg); border: 1px solid var(--line); z-index: 150; font-size: 13px; }
+.copy-fallback { position: fixed; z-index: 160; left: 16px; bottom: max(16px, env(safe-area-inset-bottom, 0px)); width: min(400px, calc(100% - 32px)); padding: 22px; border: 1px solid var(--accent); background: var(--surface); }
+.copy-fallback .field { margin-bottom: 8px; }
+@media (min-width: 1500px) { .header-menu { flex-direction: row; align-items: center; gap: 28px; } .main-nav { gap: 17px; } .header-phone { display: none; } }
+@media (max-width: 1000px) { .main-nav { gap: 14px; } .header-inner { gap: 20px; } .header-tools { gap: 14px; } .brand-name { font-size: 15px; } .hero-grid { gap: 30px; } .sheet { padding: 23px; } .split { gap: 40px; } .cta-row { align-items: flex-start; flex-direction: column; gap: 10px; } .contacts-grid { gap: 45px; } .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; } }
+@media (max-width: 800px) {
+  .site-header .wrap { position: relative; } .header-inner { padding-block: 14px; } .brand-seal { width: 44px; height: 44px; font-size: 20px; }
+  .brand-name { font-size: 14px; } .brand-caption { font-size: 7px; margin-top: 5px; } .menu-toggle { display: inline-flex; }
+  .header-menu { display: none; position: absolute; top: 100%; left: -16px; right: -16px; padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); background: var(--bg); border-bottom: 1px solid var(--line); align-items: stretch; max-height: 75dvh; overflow-y: auto; }
+  .header-menu.is-open { display: flex; } .main-nav { flex-direction: column; gap: 0; } .main-nav a { padding: 10px 0; font-size: 15px; } .header-tools { flex-wrap: wrap; margin-top: 14px; gap: 18px; } .header-phone { width: 100%; }
+  .hero-grid { grid-template-columns: 1fr; gap: 42px; } .hero-sheet { width: min(100%, 550px); margin-inline: auto; } .hero .lead { max-width: 600px; }
+  .hero { padding-top: 34px; } .band { padding-block: 48px; } .page-intro { padding-block: 40px 32px; }
+  .grid-3 { gap: 20px; } .plan-head { min-height: 100px; } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+  .split, .contacts-grid { grid-template-columns: 1fr; gap: 28px; } .section-head { align-items: flex-start; flex-direction: column; gap: 16px; }
+}
+@media (max-width: 600px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 28px; } .service-item { padding-top: 20px; } .service-item p { min-height: 0; }
+  .hero .h1 { font-size: clamp(29px, 7.5vw, 42px); } .hero-sheet { transform: none; } .sheet { padding: 20px; }
+  .sheet-row { grid-template-columns: 22px minmax(70px, .85fr) minmax(90px, 1.15fr); gap: 7px; font-size: 12px; }
+  .sheet-control { font-size: 12px; } .stamp { font-size: 12px; padding: 10px; } .sheet-foot > p { max-width: 100px; font-size: 10px; }
+  .hero-facts { gap: 24px; } .hero-facts strong { font-size: 14px; } .hero-facts div { font-size: 11px; }
+  .plan-head { min-height: 0; } .plan ul { margin-bottom: 20px; } .plan .btn { margin-top: 0; } .plan { padding-bottom: 8px; }
+  .table th, .table td { padding: 16px 14px 16px 0; } .table-prices { min-width: 560px; }
+  .callout { padding: 22px; } .footer-grid { gap: 30px 20px; } .footer-grid > :first-child { grid-column: 1 / -1; } .footer-contacts { grid-column: 1 / -1; }
+  .modal { padding-block: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-bottom, 0px)); } .modal-panel { padding: 28px 22px; } .modal-panel .h2 { font-size: 25px; }
+  .cta-row .actions { width: 100%; } .cta-row .actions .btn { flex: 1 1 auto; } .tabs { gap: 7px; } .tabs button { padding: 10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+
+.app-calc-layout { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 72px); align-items: start; margin-top: 36px; }
+.app-options, .app-preview, .app-panel, .app-order-wrap { min-width: 0; }
+.app-group { border: 0; padding: 0 0 26px; margin: 0 0 26px; border-bottom: 1px solid var(--line); min-width: 0; }
+.app-group legend { font-weight: 700; font-size: 1.1rem; margin-bottom: 14px; padding: 0; }
+.app-choices { display: grid; gap: 10px; }
+.app-choice { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 14px; border: 1px solid var(--line); cursor: pointer; background: var(--surface); }
+.app-choice:has(input:checked) { border-color: var(--accent); outline: 1px solid var(--accent); }
+.app-choice input, .app-check input { accent-color: var(--accent); width: 18px; height: 18px; margin-top: 3px; flex: 0 0 auto; }
+.app-choice small { display: block; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+.app-price { font-family: var(--font-mono); font-size: .83rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.app-check { display: flex; align-items: start; gap: 10px; line-height: 1.5; cursor: pointer; }
+.app-okved { display: grid; gap: 10px; max-height: 340px; overflow-y: auto; padding: 4px; }
+.app-okved code { font-family: var(--font-mono); color: var(--accent); }
+.app-preview { position: sticky; top: 100px; }
+.app-mobile-summary { display: none; }
+.app-sheet { position: relative; padding: clamp(20px, 3vw, 36px); overflow-wrap: anywhere; }
+.app-sheet-head { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 16px; padding-bottom: 20px; border-bottom: 2px solid var(--fg); margin-bottom: 14px; }
+.app-sheet-head p { margin: 0; }
+.app-sheet-title { font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; letter-spacing: .04em; }
+.app-sample { display: inline-block; color: var(--accent); border: 1px solid currentColor; font-family: var(--font-mono); font-size: .75rem; letter-spacing: .12em; padding: 5px 8px; }
+.app-sheet-row { display: grid; grid-template-columns: 2rem minmax(90px, .8fr) minmax(0, 1.2fr); align-items: baseline; gap: 10px; border-bottom: 1px solid var(--line); padding: 14px 0; font-size: .9rem; }
+.app-sheet-row > :first-child { font-family: var(--font-mono); color: var(--muted); font-size: .7rem; }
+.app-sheet-row > :nth-child(2) { color: var(--muted); }
+.app-sheet-note { font-size: .78rem; color: var(--muted); margin-top: 20px; }
+.app-total { display: flex; flex-wrap: wrap; gap: 18px 36px; border-top: 2px solid var(--accent); background: var(--surface); padding: 20px 0; margin-top: 24px; }
+.app-total small { color: var(--muted); display: block; margin-bottom: 5px; }
+.app-total strong { font-size: clamp(1.25rem, 2vw, 1.75rem); font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.app-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 20px; }
+.app-hint { color: var(--muted); font-size: .88rem; line-height: 1.6; margin: 12px 0 0; }
+.app-note { border: 1px dashed var(--line); padding: 18px; margin: 20px 0; }
+.app-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 30px 0; gap: 8px; }
+.app-steps li { border-top: 3px solid var(--line); padding-top: 12px; font-size: .9rem; color: var(--muted); }
+.app-steps li[aria-current="step"] { border-color: var(--accent); color: var(--accent); font-weight: 700; }
+.app-step-done { border-color: var(--ok) !important; }
+.app-step-number { display: block; font-family: var(--font-mono); margin-bottom: 5px; }
+.app-order-form { max-width: 850px; }
+.app-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.app-field { display: grid; gap: 7px; margin-bottom: 18px; align-content: start; }
+.app-field input, .app-field select, .app-field textarea { width: 100%; min-width: 0; box-sizing: border-box; background: var(--surface); color: var(--fg); border: 1px solid var(--line); padding: 12px; border-radius: 0; font: inherit; }
+.app-field textarea { min-height: 100px; resize: vertical; }
+.app-field input[aria-invalid="true"], .app-field select[aria-invalid="true"], .app-check input[aria-invalid="true"] { border-color: var(--warn); outline: 1px solid var(--warn); }
+.app-error { display: block; color: var(--warn); font-size: .85rem; min-height: 1.2em; }
+.app-error:empty { display: none; }
+.app-review { display: grid; grid-template-columns: minmax(100px, .5fr) minmax(0, 1fr); margin: 0 0 24px; }
+.app-review dt, .app-review dd { padding: 12px 0; border-bottom: 1px solid var(--line); margin: 0; overflow-wrap: anywhere; }
+.app-review dt { color: var(--muted); }
+.app-success { max-width: 780px; }
+.app-stamp-space { min-height: 115px; display: flex; align-items: center; justify-content: flex-end; padding: 24px 4px 8px; }
+.app-stamp { display: inline-block; color: var(--accent); border: 3px double currentColor; padding: 12px; font-family: var(--font-mono); font-size: clamp(.8rem, 2vw, 1.2rem); font-weight: 700; transform: rotate(-7deg); text-align: center; max-width: 100%; }
+.app-stamp small { display: block; font-size: .65rem; letter-spacing: .2em; padding-top: 5px; }
+.app-stamp-drop { animation: app-stamp-drop .65s cubic-bezier(.2,.7,.3,1) both; }
+@keyframes app-stamp-drop { from { opacity: 0; transform: translateY(-65px) scale(1.4) rotate(-16deg); } 75% { opacity: 1; transform: translateY(4px) scale(.98) rotate(-7deg); } to { opacity: 1; transform: translateY(0) scale(1) rotate(-7deg); } }
+.app-section-head { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.app-section-head h1, .app-section-head h2 { margin-bottom: 0; }
+.app-tabs { display: flex; flex-wrap: wrap; border-bottom: 1px solid var(--line); gap: 4px; margin: 28px 0; }
+.app-tab { border: 0; border-bottom: 3px solid var(--line); color: var(--muted); background: var(--surface); padding: 12px 18px; cursor: pointer; font: inherit; }
+.app-tab[aria-selected="true"] { border-bottom-color: var(--accent); color: var(--accent); font-weight: 700; }
+.app-tracker { list-style: none; margin: 0; padding: 0; counter-reset: app-track; }
+.app-tracker li { position: relative; padding: 0 0 25px 50px; min-height: 54px; color: var(--muted); counter-increment: app-track; }
+.app-tracker li::before { content: counter(app-track); position: absolute; left: 0; top: 0; width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--line); background: var(--surface); font-family: var(--font-mono); font-size: .8rem; }
+.app-tracker li::after { content: ""; position: absolute; top: 32px; bottom: 3px; left: 15px; border-left: 1px solid var(--line); }
+.app-tracker li:last-child::after { display: none; }
+.app-tracker .app-track-done { color: var(--fg); }
+.app-tracker .app-track-done::before { border-color: var(--accent); color: var(--accent); }
+.app-tracker li[aria-current="step"]::before { background: var(--accent); color: var(--accent-fg); }
+.app-tracker small { display: block; font-size: .8rem; margin-top: 5px; color: var(--muted); }
+.app-status-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; align-items: start; }
+.app-events { list-style: none; padding: 0; margin: 0; }
+.app-events li { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.app-events time { display: block; font-family: var(--font-mono); color: var(--muted); font-size: .75rem; margin-bottom: 6px; }
+.app-doc-list { list-style: none; margin: 0; padding: 0; }
+.app-doc-list li { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.app-doc-list small { display: block; color: var(--muted); margin-top: 6px; }
+.app-balance { font-family: var(--font-mono); font-size: clamp(2rem, 5vw, 3.5rem); margin: 8px 0 24px; }
+.app-messages { display: grid; gap: 14px; max-height: 430px; overflow-y: auto; margin-bottom: 24px; padding: 4px; }
+.app-message { padding: 16px; border: 1px solid var(--line); max-width: 90%; overflow-wrap: anywhere; }
+.app-message[data-author="you"] { justify-self: end; border-color: var(--accent); }
+.app-message p { margin: 8px 0; white-space: pre-wrap; }
+.app-message time { font-size: .75rem; color: var(--muted); }
+.app-modal { position: fixed; inset: 0; z-index: 1000; overflow-y: auto; background: var(--bg); padding: 24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px)); box-sizing: border-box; }
+.app-modal[hidden] { display: none; }
+.app-dialog { max-width: 820px; margin: 24px auto; background: var(--surface); border: 1px solid var(--line); padding: clamp(16px, 3vw, 32px); }
+.app-modal-open { overflow: hidden; }
+.app-panel:focus, .app-dialog:focus { outline: none; }
+.app-panel :focus-visible, .app-options :focus-visible, .app-order-form :focus-visible, .app-dialog :focus-visible, .app-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@media (max-width: 850px) {
+  .app-calc-layout, .app-status-grid { grid-template-columns: minmax(0, 1fr); }
+  .app-preview { position: static; }
+  .app-calc-view { padding-bottom: 110px; }
+  .app-calc-active { padding-bottom: 110px; }
+  .app-calc-active #toast { bottom: 110px; }
+  .app-mobile-summary { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px max(16px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); background: var(--surface); border-top: 2px solid var(--accent); }
+  .app-mobile-summary > div { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .app-mobile-summary small { display: block; color: var(--muted); font-size: .7rem; }
+  .app-mobile-summary strong { font-size: .85rem; font-family: var(--font-mono); white-space: nowrap; }
+}
+@media (max-width: 520px) {
+  .app-fields { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .app-choice { grid-template-columns: auto minmax(0, 1fr); }
+  .app-choice .app-price { grid-column: 2; }
+  .app-steps { gap: 5px; }
+  .app-steps li { font-size: .72rem; overflow-wrap: anywhere; }
+  .app-sheet-row { grid-template-columns: 1.4rem minmax(0, 1fr); gap: 6px; }
+  .app-sheet-row > :last-child { grid-column: 2; }
+  .app-review { grid-template-columns: minmax(0, 1fr); }
+  .app-review dt { border-bottom: 0; padding-bottom: 0; }
+  .app-doc-list li { align-items: start; flex-direction: column; }
+  .app-tab { padding: 10px; font-size: .85rem; }
+  .app-message { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .app-stamp-drop { animation: none; } }
+
+</style>
+<div id="page-shell">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#home" aria-label="Бюро Кудайбердина — главная">
+        <span class="brand-seal" aria-hidden="true">БК<span>БЮРО</span></span>
+        <span class="brand-name">Бюро<br>Кудайбердина<span class="brand-caption">ДЕЛО НАЧИНАЕТСЯ С ЛИСТА</span></span>
+      </a>
+      <button class="icon-btn menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="header-menu" aria-label="Открыть меню"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+      <div class="header-menu" id="header-menu">
+        <nav class="main-nav" aria-label="Основная навигация" data-nav>
+          <a href="#ip">Регистрация ИП</a><a href="#rko">РКО</a><a href="#prices">Цены</a><a href="#faq">Вопросы</a><a href="#about">О бюро</a><a href="#contacts">Контакты</a>
+        </nav>
+        <div class="header-tools">
+          <span class="header-phone mono">+7 (000) 000-00-00</span>
+          <a class="btn btn-primary btn-small" href="#calc">Собрать старт <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a>
+          <a class="cabinet-link" href="#cabinet">Кабинет</a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Включить тёмную тему"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20 14a8 8 0 0 1-10-10 8 8 0 1 0 10 10Z"/></svg><span data-theme-label>Тёмная</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main id="main-content">
+    <section class="view" data-view="home" hidden>
+  <div class="band hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">РЕГИСТРАЦИЯ ИП / РАСЧЁТНЫЙ СЧЁТ</p>
+        <h1 class="h1">Ваше дело.<br>С <mark>чистого листа.</mark></h1>
+        <p class="lead">Поможем открыть ИП и выбрать счёт. Разберём документы, налоги и тарифы — чтобы вы занимались делом, а не расшифровкой сокращений.</p>
+        <div class="actions"><a class="btn btn-primary" href="#calc">Собрать свой старт <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a><a class="btn btn-ghost" href="#order">Перейти к заявке</a></div>
+        <p class="small muted">Без регистрации на сайте. Все действия — демонстрация.</p>
+        <div class="hero-facts"><div><strong>3 рабочих дня</strong>регистрация в ФНС</div><div><strong>0 ₽ госпошлины</strong>электронная подача с КЭП</div></div>
+      </div>
+      <div>
+        <div class="sheet hero-sheet">
+          <div class="sheet-head"><span>БК / ЛИСТ СТАРТА</span><span>ОБРАЗЕЦ</span></div>
+          <p class="sheet-title">Дело начинается здесь</p><p class="small muted">Попробуйте заполнить свой первый лист.</p>
+          <div class="sheet-row"><span>А</span><span>Форма дела</span><span>Индивидуальный предприниматель</span></div>
+          <div class="sheet-row"><span>Б</span><label class="sheet-control-label" for="home-tax">Налоговый режим</label><select class="sheet-control" id="home-tax"><option value="usn6">УСН 6%</option><option value="usn15">УСН 15%</option><option value="patent">Патент</option><option value="ausn">АУСН</option><option value="npd">НПД</option></select></div>
+          <div class="sheet-row"><span>В</span><span>Деятельность</span><span>Дизайн · ОКВЭД 74.10</span></div>
+          <div class="sheet-row"><span>Г</span><label class="sheet-control-label" for="home-account">Расчётный счёт</label><select class="sheet-control" id="home-account" data-rko-options></select></div>
+          <div class="sheet-foot"><p>Не документ ФНС.<br>Выбор можно изменить.</p><span class="stamp" id="home-stamp">ЗАРЕГИСТРИРОВАНО<small>ОБРАЗЕЦ</small></span></div>
+        </div>
+        <p class="hero-caption" id="home-sheet-status" aria-live="polite">ЛИСТ ЖИВОЙ: ВЫБЕРИТЕ РЕЖИМ И СЧЁТ. ЭТО ДЕМО.</p>
+      </div>
+    </div>
+  </div>
+  <div class="band band-surface"><div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">ЧТО БЕРЁМ НА СЕБЯ</p><h2 class="h2">От идеи до первых платежей</h2></div><a href="#prices">Все цены <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></div>
+    <div class="grid-3">
+      <article class="service-item"><span class="service-code">Р21001 / РЕГИСТРАЦИЯ</span><h3 class="h3">Открыть ИП</h3><p>Подготовим заявление, поможем выбрать деятельность и налоговый режим. Покажем, как подать документы.</p><a class="service-link" href="#ip">Что входит <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></article>
+      <article class="service-item"><span class="service-code">РКО / ПЛАТЕЖИ</span><h3 class="h3">Подобрать счёт</h3><p>Сравним обслуживание и стоимость платежей. Подберём тариф под ваш объём работы.</p><a class="service-link" href="#rko">Сравнить тарифы <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></article>
+      <article class="service-item"><span class="service-code">УЧЁТ / ПОДДЕРЖКА</span><h3 class="h3">Разобраться с учётом</h3><p>Обсудим первые документы и отчётность. Бухгалтерское сопровождение можно добавить к старту.</p><a class="service-link" href="#calc">Собрать комплект <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></article>
+    </div>
+  </div></div>
+  <div class="band"><div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">ПО ПОРЯДКУ</p><h2 class="h2">Понятно, что будет дальше</h2></div><p class="small muted">На сайте можно пройти демо-путь целиком.</p></div>
+    <ol class="steps"><li><h3>Выбираем старт</h3><p>Определяем услуги, деятельность и режим. Калькулятор сразу показывает стоимость.</p></li><li><h3>Готовим документы</h3><p>Сверяем заявление Р21001. Для электронной подачи оформляется КЭП.</p></li><li><h3>Подаём и ждём</h3><p>Документы поступают в ФНС. Срок регистрации — 3 рабочих дня после подачи.</p></li><li><h3>Переходим к счёту</h3><p>После регистрации выбираем РКО. Банк проверяет документы и принимает решение.</p></li></ol>
+  </div></div>
+  <div class="band band-surface"><div class="wrap split">
+    <div><p class="eyebrow">ЕСТЬ ВЫБОР</p><h2 class="h2">Самостоятельно<br>или с бюро?</h2><p class="muted">Открыть ИП можно самому. Мы берём на себя подготовку и объясняем каждый следующий шаг.</p><a href="#ip">Разобраться в регистрации</a></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Сравнение самостоятельной регистрации и помощи бюро"><table class="table"><thead><tr><th scope="col">Задача</th><th scope="col">Самостоятельно</th><th scope="col">Через бюро</th></tr></thead><tbody><tr><th scope="row">Заявление</th><td>Заполняете и проверяете</td><td>Готовим и сверяем</td></tr><tr><th scope="row">ОКВЭД и режим</th><td>Изучаете условия</td><td>Обсуждаем в тарифе «Под ключ»</td></tr><tr><th scope="row">Подача</th><td>Выбираете способ</td><td>Онлайн с КЭП в тарифе «Под ключ»</td></tr><tr><th scope="row">Решение ФНС</th><td colspan="2">Принимает ФНС в обоих случаях. Одобрение не гарантируем.</td></tr></tbody></table></div>
+  </div></div>
+  <div class="band"><div class="wrap grid-2">
+    <div><p class="eyebrow">СЧЁТ ПОД ВАШ РИТМ</p><h2 class="h2">Не платите<br>за лишние платежи</h2><p class="muted">Для первых заказов и регулярного оборота нужны разные тарифы. Посчитайте обслуживание по числу платежей в месяц.</p><div class="actions"><a class="btn btn-primary" href="#rko">Подобрать РКО <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></div><p class="small muted">Банк-партнёр бюро — вымышленный. Тарифы учебные.</p></div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Краткое сравнение тарифов РКО"><table class="table"><thead><tr><th scope="col">Тариф</th><th scope="col">В месяц</th><th scope="col">Платежи</th></tr></thead><tbody data-home-rko></tbody></table></div>
+  </div></div>
+  <div class="band band-surface"><div class="wrap split">
+    <div><p class="eyebrow">ДО ПЕРВОГО ШАГА</p><h2 class="h2">Хорошие вопросы.<br>Прямые ответы.</h2><a href="#faq">Все вопросы и поиск <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></a></div>
+    <div class="faq-list">
+      <details class="faq-item"><summary>Можно ли открыть ИП без счёта?</summary><div><p>Регистрация ИП и открытие счёта — разные шаги. Счёт подбираем отдельно под способы расчёта с клиентами.</p></div></details>
+      <details class="faq-item"><summary>За что я плачу бюро?</summary><div><p>За подготовку и проверку документов, а в расширенных тарифах — за подбор режима, ОКВЭД и помощь с электронной подачей. Состав каждого тарифа открыт в разделе цен.</p><a href="#prices">Посмотреть состав тарифов</a></div></details>
+      <details class="faq-item"><summary>Это настоящий сервис?</summary><div><p>Это учебный проект Рустема Кудайбердина. Организация вымышленная. Заявки, счёт и кабинет работают только как демонстрация; данные никуда не отправляются.</p></div></details>
+    </div>
+  </div></div>
+  <div class="band"><div class="wrap cta-row"><div><p class="eyebrow">ОСТАЛОСЬ НАЧАТЬ</p><h2 class="h2">Сначала — понятный план.<br>Потом — своё дело.</h2><p class="muted">Соберите услуги или проверьте демо-форму звонка.</p></div><div class="actions"><a class="btn btn-primary" href="#calc">Собрать старт</a><button class="btn btn-ghost" type="button" data-callback="Хочу разобраться со стартом">Заказать звонок</button></div></div></div>
+</section>
+
+<section class="view" data-view="ip" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">Р21001 / РЕГИСТРАЦИЯ ИП</p><h1 class="h1">Открыть ИП.<br>Не запутаться в бумагах.</h1><p class="lead">От заявления до электронной подачи. Выбирайте, какую часть пути пройти с нами.</p><div class="actions"><button class="btn btn-primary" type="button" data-scroll="ip-plans">Выбрать тариф</button><a class="btn btn-ghost" href="#calc">Собрать свой комплект</a></div></div></div>
+  <div class="band band-surface"><div class="wrap split"><div><p class="eyebrow">ЧТО ВХОДИТ</p><h2 class="h2">Заявление —<br>только начало</h2><p class="muted">Не обещаем одобрение за вас. Помогаем подготовиться и понимать, что происходит.</p></div><ul class="line-list"><li><strong>Подготовка Р21001</strong><p>Заполняем и проверяем заявление. На этом учебном сайте документы и паспортные данные не собираем.</p></li><li><strong>Деятельность и режим</strong><p>В тарифе «Под ключ» обсуждаем ОКВЭД и налоги под вашу работу.</p></li><li><strong>Подача онлайн</strong><p>В тарифах «Под ключ» предусмотрены КЭП и электронная подача в ФНС.</p></li><li><strong>После регистрации</strong><p>Объясняем следующий шаг: счёт и учёт. В расширенном тарифе — три месяца сопровождения бухгалтером.</p></li></ul></div></div>
+  <div class="band" id="ip-plans"><div class="wrap"><div class="section-head"><div><p class="eyebrow">ОБЪЁМ ПОМОЩИ</p><h2 class="h2">Три способа начать</h2></div><p class="small muted">Разовая стоимость услуг бюро.<br>Госпошлина считается отдельно.</p></div><div class="grid-3" data-reg-plans></div><p class="small muted" style="margin-top:28px">При электронной подаче с КЭП госпошлина — 0 ₽, на бумаге — 800 ₽. Срок регистрации — 3 рабочих дня после подачи в ФНС. Все тарифы здесь учебные.</p></div></div>
+  <div class="band band-surface"><div class="wrap grid-2"><div><p class="eyebrow">ДОКУМЕНТЫ</p><h2 class="h2">Что готовят<br>для подачи</h2><p class="muted">Здесь — список для знакомства с процессом. Загружать документы на сайт не нужно.</p><ul class="line-list"><li><strong>Заявление Р21001</strong><p>Основная форма для регистрации индивидуального предпринимателя.</p></li><li><strong>Документ, удостоверяющий личность</strong><p>Нужен для подготовки реального пакета. В демо его данные не запрашиваем.</p></li><li><strong>Способ подписания и подачи</strong><p>Для электронной подачи — КЭП. При бумажной подаче учитывается госпошлина.</p></li><li><strong>Выбор налогового режима</strong><p>Условия и необходимые уведомления зависят от выбранного варианта.</p></li></ul></div><div><p class="eyebrow">ФОРМА ДЕЛА</p><h2 class="h2">ИП или<br>самозанятость?</h2><p>ИП — статус предпринимателя. Самозанятость обычно означает работу на НПД. Это разные понятия: ИП тоже может применять НПД, если соблюдает условия.</p><div class="callout"><h3 class="h3">Начните с того, как вы работаете</h3><p class="muted">Продаёте товары или оказываете услуги? Планируете сотрудников? Какие расходы и клиенты? Ответы помогут выбрать форму и режим.</p><button class="text-btn" type="button" data-callback="ИП или самозанятость">Обсудить выбор в демо-форме</button></div><p class="small muted" style="margin-top:20px">Регистрация ИП связана с обязанностями по учёту, налогам и взносам. Не выбирайте режим только по названию ставки.</p></div></div></div>
+  <div class="band"><div class="wrap"><p class="eyebrow">НАЛОГОВЫЕ РЕЖИМЫ</p><h2 class="h2">Один статус — разные условия</h2><p class="muted">Краткая карта вариантов для учебного сценария. Условия применения нужно проверять под конкретную деятельность.</p>
+    <div class="tabs" role="tablist" aria-label="Налоговые режимы"><button type="button" role="tab" id="tax-tab-usn6" aria-selected="true" aria-controls="tax-panel-usn6" data-tax-tab="usn6">УСН 6%</button><button type="button" role="tab" id="tax-tab-usn15" aria-selected="false" aria-controls="tax-panel-usn15" tabindex="-1" data-tax-tab="usn15">УСН 15%</button><button type="button" role="tab" id="tax-tab-patent" aria-selected="false" aria-controls="tax-panel-patent" tabindex="-1" data-tax-tab="patent">Патент</button><button type="button" role="tab" id="tax-tab-ausn" aria-selected="false" aria-controls="tax-panel-ausn" tabindex="-1" data-tax-tab="ausn">АУСН</button><button type="button" role="tab" id="tax-tab-npd" aria-selected="false" aria-controls="tax-panel-npd" tabindex="-1" data-tax-tab="npd">НПД</button></div>
+    <div class="tax-panel" role="tabpanel" id="tax-panel-usn6" aria-labelledby="tax-tab-usn6" tabindex="0"><h3 class="h3">УСН «Доходы»</h3><p>Налог считают с доходов. В учебном расчёте используем ставку 6%. Вариант для обсуждения, если подтверждённых расходов немного.</p><button class="text-btn" type="button" data-tax-choose="usn6">Выбрать УСН 6% и собрать старт</button></div>
+    <div class="tax-panel" role="tabpanel" id="tax-panel-usn15" aria-labelledby="tax-tab-usn15" tabindex="0" hidden><h3 class="h3">УСН «Доходы минус расходы»</h3><p>Учитывают разницу между доходами и подтверждёнными расходами. В учебном сценарии ставка — 15%. Сравнивать варианты лучше на своих доходах и затратах.</p><button class="text-btn" type="button" data-tax-choose="usn15">Выбрать УСН 15% и собрать старт</button></div>
+    <div class="tax-panel" role="tabpanel" id="tax-panel-patent" aria-labelledby="tax-tab-patent" tabindex="0" hidden><h3 class="h3">Патент</h3><p>Подходит для определённых видов деятельности. Возможность применения и стоимость зависят от региона и условий работы.</p><button class="text-btn" type="button" data-tax-choose="patent">Выбрать патент и собрать старт</button></div>
+    <div class="tax-panel" role="tabpanel" id="tax-panel-ausn" aria-labelledby="tax-tab-ausn" tabindex="0" hidden><h3 class="h3">Автоматизированная УСН</h3><p>Режим с автоматизированным расчётом налога. Перед выбором проверяют доступность режима и требования к работе со счётом и учётом.</p><button class="text-btn" type="button" data-tax-choose="ausn">Выбрать АУСН и собрать старт</button></div>
+    <div class="tax-panel" role="tabpanel" id="tax-panel-npd" aria-labelledby="tax-tab-npd" tabindex="0" hidden><h3 class="h3">Налог на профессиональный доход</h3><p>Вариант для самостоятельной работы при соблюдении условий НПД. Нужно проверить ограничения по деятельности и организации работы.</p><button class="text-btn" type="button" data-tax-choose="npd">Выбрать НПД и собрать старт</button></div>
+  </div></div>
+  <div class="band band-surface"><div class="wrap split"><div><p class="eyebrow">ПРОВЕРКА ДО ПОДАЧИ</p><h2 class="h2">Из-за чего можно<br>получить отказ</h2><p class="muted">Проверка снижает риск технических ошибок, но решение о регистрации принимает ФНС.</p></div><ul class="line-list"><li><strong>Ошибки в заявлении</strong><p>Опечатки, несовпадение сведений и неверное заполнение полей.</p></li><li><strong>Неполный пакет или неверная подпись</strong><p>Состав документов и способ подписания должны соответствовать способу подачи.</p></li><li><strong>Есть препятствия к регистрации</strong><p>Например, действующий статус ИП или установленные ограничения. Такие ситуации разбирают отдельно.</p></li></ul></div></div>
+  <div class="band"><div class="wrap cta-row"><div><h2 class="h2">Пусть у старта будет план</h2><p class="muted">Регистрация, счёт и дополнительные услуги в одном расчёте.</p></div><div class="actions"><a class="btn btn-primary" href="#calc">Собрать старт</a><button class="btn btn-ghost" type="button" data-callback="Вопрос о регистрации ИП">Заказать звонок</button></div></div></div>
+</section>
+
+<section class="view" data-view="rko" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">РКО / РАСЧЁТНЫЙ СЧЁТ</p><h1 class="h1">Счёт, который подходит<br>вашему делу.</h1><p class="lead">Сравните стоимость обслуживания и платежей. Все условия ниже — учебные тарифы вымышленного банка-партнёра бюро.</p><div class="actions"><button class="btn btn-primary" type="button" data-scroll="rko-calculator">Посчитать в месяц</button><a class="btn btn-ghost" href="#order">К демо-заявке</a></div></div></div>
+  <div class="band band-surface"><div class="wrap"><p class="eyebrow">ДЛЯ КОГО</p><h2 class="h2">У каждого дела свой ритм</h2><div class="grid-3"><article class="service-item"><h3 class="h3">Первые заказы</h3><p>Немного переводов и нерегулярная работа. Важно сравнить нулевую плату за обслуживание с ценой отдельных платежей.</p></article><article class="service-item"><h3 class="h3">Регулярные расчёты</h3><p>Оплата поставщикам и подрядчикам каждый месяц. Пакет платежей помогает заранее понимать расходы.</p></article><article class="service-item"><h3 class="h3">Активный оборот</h3><p>Много переводов и работа с валютными операциями. Важны лимиты и доступность валютного контроля.</p></article></div></div></div>
+  <div class="band"><div class="wrap"><div class="section-head"><div><p class="eyebrow">УЧЕБНЫЕ ТАРИФЫ</p><h2 class="h2">Три варианта счёта</h2></div><p class="small muted">Банк-партнёр бюро — вымышленный.<br>Настоящий счёт здесь не открывается.</p></div><div class="grid-3" data-rko-plans></div></div></div>
+  <div class="band band-surface"><div class="wrap"><p class="eyebrow">УСЛОВИЯ РЯДОМ</p><h2 class="h2">Сравните по строкам</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Полное сравнение тарифов РКО"><table class="table table-wide" data-rko-comparison></table></div><p class="small muted" style="margin-top:20px">Условия переводов сверх указанных лимитов в учебном проекте не заданы. Калькулятор ниже считает только обслуживание и исходящие платежи.</p></div></div>
+  <div class="band" id="rko-calculator"><div class="wrap grid-2"><div><p class="eyebrow">ПРОСТАЯ АРИФМЕТИКА</p><h2 class="h2">Сколько выйдет<br>в месяц?</h2><p class="muted">Введите число исходящих платежей. Посчитаем абонентскую плату и платежи сверх пакета по каждому тарифу.</p><div class="field"><label for="rko-payments">Платежей в месяц</label><input id="rko-payments" type="number" min="0" max="100000" step="1" value="20" inputmode="numeric" aria-describedby="rko-payments-error"></div><p class="form-error" id="rko-payments-error" role="alert"></p><p class="small muted">Не учитываем вывод себе, налоги, валютные операции и дополнительные услуги. Это сравнение учебных тарифов.</p></div><div class="callout"><p class="eyebrow">ОБСЛУЖИВАНИЕ + ПЛАТЕЖИ</p><div class="calculator-output" id="rko-costs" aria-live="polite"></div><p class="small muted" id="rko-best"></p><button class="btn btn-primary" id="rko-select-best" type="button">Выбрать выгодный тариф</button></div></div></div>
+  <div class="band band-surface"><div class="wrap"><p class="eyebrow">ПОСЛЕ РЕГИСТРАЦИИ</p><h2 class="h2">Как открывают счёт</h2><ol class="steps"><li><h3>Выбирают тариф</h3><p>Оценивают платежи, вывод себе и необходимые услуги.</p></li><li><h3>Передают документы</h3><p>Банк уточняет комплект и проверяет сведения о предпринимателе. На сайте документы не собираем.</p></li><li><h3>Проходят проверку</h3><p>Банк идентифицирует клиента и принимает решение об открытии счёта.</p></li><li><h3>Начинают расчёты</h3><p>После одобрения и оформления договора становятся доступны реквизиты и платежи.</p></li></ol></div></div>
+  <div class="band"><div class="wrap cta-row"><div><h2 class="h2">ИП и счёт — в одном плане</h2><p class="muted">Добавьте регистрацию или начните со счёта.</p></div><div class="actions"><a class="btn btn-primary" href="#calc">Собрать старт</a><button class="btn btn-ghost" type="button" data-callback="Помощь с выбором РКО">Обсудить РКО</button></div></div></div>
+</section>
+
+<section class="view" data-view="prices" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">СТОИМОСТЬ / БЕЗ МЕЛКОГО ШРИФТА</p><h1 class="h1">Все цены.<br>На одном листе.</h1><p class="lead">Разовая помощь при старте и ежемесячные услуги — с понятным составом. Цены учебные.</p></div></div>
+  <div class="band band-surface"><div class="wrap"><h2 class="h2">Регистрация ИП</h2><div class="table-wrap" tabindex="0" role="region" aria-label="Цены регистрации ИП"><table class="table table-prices"><thead><tr><th scope="col">Тариф</th><th scope="col">Что входит</th><th scope="col">Разово</th><th scope="col">Выбор</th></tr></thead><tbody data-reg-price-rows></tbody></table></div><p class="small muted" style="margin-top:20px">Госпошлина отдельно: на бумаге 800 ₽, при электронной подаче с КЭП — 0 ₽. Цена тарифа — стоимость услуг бюро.</p></div></div>
+  <div class="band"><div class="wrap"><h2 class="h2">Расчётный счёт</h2><p class="muted">Учебные условия вымышленного банка-партнёра бюро.</p><div class="table-wrap" tabindex="0" role="region" aria-label="Все цены РКО"><table class="table table-wide"><thead><tr><th scope="col">Тариф</th><th scope="col">В месяц</th><th scope="col">Исходящие платежи</th><th scope="col">Вывод себе</th><th scope="col">Выбор</th></tr></thead><tbody data-rko-price-rows></tbody></table></div></div></div>
+  <div class="band band-surface"><div class="wrap"><div class="section-head"><h2 class="h2">Дополнительно</h2><button class="btn btn-ghost" type="button" data-callback="Дополнительные услуги">Обсудить услугу</button></div><div class="table-wrap" tabindex="0" role="region" aria-label="Цены дополнительных услуг"><table class="table"><thead><tr><th scope="col">Услуга</th><th scope="col">Стоимость</th><th scope="col">Период</th></tr></thead><tbody data-extra-price-rows></tbody></table></div><p class="small muted" style="margin-top:20px">В тарифах регистрации «Под ключ» КЭП уже включена. В тариф «Под ключ и бухгалтер» входят три месяца сопровождения. Не добавляйте те же услуги повторно без необходимости.</p></div></div>
+  <div class="band"><div class="wrap cta-row"><div><h2 class="h2">Посчитаем ваш комплект?</h2><p class="muted">Калькулятор покажет разовые и ежемесячные расходы.</p></div><a class="btn btn-primary" href="#calc">Собрать старт</a></div></div>
+</section>
+
+<section class="view" data-view="faq" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">СПРАВОЧНАЯ / ВОПРОСЫ И ОТВЕТЫ</p><h1 class="h1">Сначала разберёмся.</h1><p class="lead">Про регистрацию, счёт и этот учебный сайт. Найдите вопрос по нескольким словам.</p></div></div>
+  <div class="band band-surface"><div class="wrap">
+    <div class="faq-search"><div class="field"><label for="faq-search">Поиск по вопросам и ответам</label><input id="faq-search" type="search" placeholder="Например, документы, КЭП или счёт" autocomplete="off" aria-controls="faq-questions" aria-describedby="faq-count"></div><p class="small muted" id="faq-count" role="status" aria-live="polite"></p></div>
+    <div class="faq-list" id="faq-questions">
+      <details class="faq-item"><summary>Это настоящее бюро или учебный проект?</summary><div><p>Это учебный проект Рустема Кудайбердина. Бюро вымышленное, услуги не оказываются. Формы, калькулятор и кабинет показывают, как мог бы работать такой сервис.</p></div></details>
+      <details class="faq-item"><summary>Какие документы нужны для регистрации ИП?</summary><div><p>Для знакомства с процессом ориентируйтесь на заявление Р21001, документ, удостоверяющий личность, и выбранный способ подписания. Комплект уточняют под способ подачи. На сайте документы и их реквизиты не собираем.</p><a href="#ip">Подробнее о регистрации</a></div></details>
+      <details class="faq-item"><summary>Сколько занимает регистрация ИП?</summary><div><p>Срок регистрации в ФНС — 3 рабочих дня после подачи документов. Подготовка и исправление ошибок могут потребовать отдельного времени.</p></div></details>
+      <details class="faq-item"><summary>Нужно ли платить госпошлину?</summary><div><p>При бумажной подаче госпошлина — 800 ₽. При электронной подаче с КЭП — 0 ₽. Это отдельный платёж, его не следует путать со стоимостью услуг бюро.</p></div></details>
+      <details class="faq-item"><summary>Что входит в тариф «Под ключ»?</summary><div><p>Подготовка и проверка Р21001, инструкция, подбор ОКВЭД и налогового режима, КЭП и подача в ФНС онлайн. Цена и остальные тарифы собраны в одном разделе.</p><a href="#prices">Все цены</a></div></details>
+      <details class="faq-item"><summary>Можно ли открыть ИП самостоятельно?</summary><div><p>Да. Бюро помогает с подготовкой и проверкой, но не является обязательным участником регистрации. В тарифе «Сам с проверкой» предусмотрены заявление, проверка и инструкция.</p></div></details>
+      <details class="faq-item"><summary>Чем ИП отличается от самозанятости?</summary><div><p>ИП — статус предпринимателя, а самозанятость обычно означает НПД. ИП тоже может работать на НПД при соблюдении условий. Выбор зависит от деятельности и организации работы.</p><a href="#ip">Посмотреть налоговые режимы</a></div></details>
+      <details class="faq-item"><summary>Как выбрать налоговый режим?</summary><div><p>Сначала оцените деятельность, доходы, расходы и планы по сотрудникам. Затем сравните доступные режимы и их ограничения. В учебном калькуляторе можно выбрать вариант, но это не персональная налоговая рекомендация.</p></div></details>
+      <details class="faq-item"><summary>Нужен ли расчётный счёт для регистрации ИП?</summary><div><p>Регистрация и открытие счёта — отдельные процедуры. Счёт подбирают под расчёты с клиентами и поставщиками. Банк отдельно проверяет сведения и принимает решение.</p><a href="#rko">Как подбирают РКО</a></div></details>
+      <details class="faq-item"><summary>Какой банк открывает счёт?</summary><div><p>В сценарии используется только вымышленный банк-партнёр бюро. Реальных банков-партнёров у учебного проекта нет, настоящий счёт не открывается.</p></div></details>
+      <details class="faq-item"><summary>Что считает калькулятор РКО?</summary><div><p>Абонентскую плату и стоимость исходящих платежей сверх пакета. Вывод себе, валютные операции, налоги и дополнительные услуги в этот расчёт не входят.</p><a href="#rko">Посчитать РКО</a></div></details>
+      <details class="faq-item"><summary>Куда отправляются данные из форм?</summary><div><p>Никуда. Формы проверяются на странице и показывают демо-результат. Используйте вымышленные имя и контакты. Паспортные данные, ИНН, СНИЛС, пароли и данные карт не нужны.</p></div></details>
+      <details class="faq-item"><summary>Как войти в кабинет без пароля?</summary><div><p>Перейдите в раздел «Кабинет» и откройте демо-кабинет. Логин и пароль не требуются. Внутри — учебный сценарий заявки.</p><a href="#cabinet">Перейти в кабинет</a></div></details>
+      <details class="faq-item"><summary>Гарантирует ли бюро регистрацию и открытие счёта?</summary><div><p>Нет. Решение о регистрации принимает ФНС, об открытии счёта — банк. В реальном процессе помощь с документами не заменяет их проверку. На сайте весь путь демонстрационный.</p></div></details>
+    </div>
+    <div class="empty-state" id="faq-empty" hidden><h2 class="h3">Ничего не найдено</h2><p class="muted">Попробуйте другое слово или откройте демо-форму звонка.</p><div class="actions"><button class="btn btn-ghost" id="faq-reset" type="button">Сбросить поиск</button><button class="btn btn-primary" type="button" data-callback="Не нашёл ответ в вопросах">Заказать звонок</button></div></div>
+  </div></div>
+  <div class="band"><div class="wrap cta-row"><div><h2 class="h2">Ваш вопрос не в списке?</h2><p class="muted">Оставьте его в учебной форме обратной связи.</p></div><a class="btn btn-primary" href="#contacts">Задать вопрос</a></div></div>
+</section>
+
+<section class="view" data-view="about" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">О БЮРО / И ОБ ЭТОЙ РАБОТЕ</p><h1 class="h1">Бюрократия бывает<br>понятной.</h1><p class="lead">Бюро Кудайбердина — вымышленное онлайн-бюро для тех, кто хочет открыть ИП и разобраться с расчётным счётом.</p></div></div>
+  <div class="band band-surface"><div class="wrap grid-2"><div><p class="eyebrow">АВТОР И ОСНОВАТЕЛЬ В СЦЕНАРИИ</p><h2 class="founder-name">Рустем<br>Кудайбердин</h2><p>Я создал этот сайт как учебную работу: хотел показать путь от первого вопроса о своём деле до понятной заявки и её статуса.</p><p class="muted">В сценарии бюро помогает подготовить документы, выбрать налоговый режим и тариф РКО. В действительности организация вымышленная, услуги не оказываются.</p><a href="#contacts">Контакты проекта</a></div><div><div class="founder-seal" aria-hidden="true">РК</div><p class="small muted">Инициалы автора вместо выдуманного портрета. У проекта нет заявленных сотрудников, банков-партнёров или истории оказания услуг.</p></div></div></div>
+  <div class="band"><div class="wrap"><p class="eyebrow">ПРИНЦИПЫ</p><h2 class="h2">Понятность — в деталях</h2><div class="grid-3"><article class="service-item"><h3 class="h3">Показывать состав</h3><p>Что входит в услугу, сколько стоит разово и сколько — в месяц. Без обещаний, спрятанных за кнопкой.</p></article><article class="service-item"><h3 class="h3">Объяснять шаги</h3><p>Подготовка, подача, решение и счёт — отдельные этапы. В кабинете видно движение учебной заявки.</p></article><article class="service-item"><h3 class="h3">Честно обозначать демо</h3><p>Образцы подписаны, формы никуда не отправляются. Не выдаём учебный результат за юридический документ.</p></article></div></div></div>
+  <div class="band band-surface"><div class="wrap cta-row"><div><p class="eyebrow">УЧЕБНЫЙ ПРОЕКТ</p><h2 class="h2">Можно всё попробовать</h2><p class="muted">Соберите старт и посмотрите, как устроен сценарий заявки.</p></div><a class="btn btn-primary" href="#calc">Начать с калькулятора</a></div></div>
+</section>
+
+<section class="view" data-view="contacts" hidden>
+  <div class="band page-intro"><div class="wrap"><p class="eyebrow">КОНТАКТЫ / ОБРАТНАЯ СВЯЗЬ</p><h1 class="h1">Есть вопрос?<br>Начнём с него.</h1><p class="lead">Контакты вымышленные. Здесь можно проверить копирование и заполнить учебную форму.</p></div></div>
+  <div class="band band-surface"><div class="wrap contacts-grid">
+    <div><div class="contact-block"><p class="small muted">Телефон для примера</p><p class="mono">+7 (000) 000-00-00</p><button class="text-btn" type="button" data-copy="+7 (000) 000-00-00">Скопировать телефон</button></div><div class="contact-block"><p class="small muted">Почта для примера</p><p class="mono">demo@example.com</p><button class="text-btn" type="button" data-copy="demo@example.com">Скопировать почту</button></div><div class="contact-block"><p class="small muted">Адрес</p><p>вымышленный, офиса нет</p><p class="small muted">Учебное бюро работает только в сценарии сайта. Посещение и настоящий звонок не предусмотрены.</p></div><button class="btn btn-ghost" type="button" data-callback="Вопрос из раздела контактов">Открыть форму звонка</button></div>
+    <div><h2 class="h2">Задать вопрос</h2><p class="small muted">Используйте вымышленное имя. Не вводите личные документы и другие чувствительные данные. Сообщение никуда не отправится.</p>
+      <form id="contact-form" novalidate>
+        <div class="field"><label for="contact-topic">Тема</label><select id="contact-topic" name="topic" required aria-describedby="contact-error"><option value="">Выберите тему</option value="ip">Регистрация ИП</option><option value="rko">Расчётный счёт</option><option value="prices">Цены и состав услуг</option><option value="project">Учебный проект</option><option value="other">Другой вопрос</option></select></div>
+        <div class="field"><label for="contact-name">Как к вам обращаться</label><input id="contact-name" name="name" minlength="2" maxlength="70" autocomplete="off" required aria-describedby="contact-error"></div>
+        <div class="field"><label for="contact-message">Ваш вопрос</label><textarea id="contact-message" name="message" minlength="10" maxlength="1500" required aria-describedby="contact-error" placeholder="Не меньше 10 символов"></textarea></div>
+        <label class="check" for="contact-consent"><input id="contact-consent" name="consent" type="checkbox" required aria-describedby="contact-error"><span>Согласен на обработку введённых данных только в рамках этой демо-формы.</span></label>
+        <p class="form-error" id="contact-error" role="alert"></p><div class="actions"><button class="btn btn-primary" type="submit">Проверить и завершить <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></button></div>
+      </form>
+      <div class="success-box" id="contact-success" hidden tabindex="-1" role="status"><span class="pill pill-ok">Проверка пройдена</span><h3 class="h3">Вопрос заполнен</h3><p>В настоящем сервисе здесь появилось бы подтверждение отправки. Это демо: сообщение никуда не отправлено, ответа не будет.</p><button class="btn btn-ghost" type="button" id="contact-again">Задать ещё вопрос</button></div>
+    </div>
+  </div></div>
+</section>
+
+<section class="view" data-view="notfound" hidden>
+  <div class="band"><div class="wrap"><p class="eyebrow">РАЗДЕЛ НЕ НАЙДЕН</p><h1 class="h1">Этот лист<br>ещё не завели.</h1><p class="lead muted">Возможно, в адресе ошибка. Вернитесь на главную или откройте список услуг.</p><div class="actions"><a class="btn btn-primary" href="#home">На главную</a><a class="btn btn-ghost" href="#prices">Посмотреть услуги</a></div></div></div>
+</section>
+
+<section class="view app-calc-view" data-view="calc" hidden aria-labelledby="app-calc-title">
+  <div class="band"><div class="wrap">
+    <p class="eyebrow">Конструктор старта / ИП + счёт</p>
+    <h1 class="h1" id="app-calc-title">Собрать старт</h1>
+    <p class="lead">Вы выбираете — мы заполняем лист. Стоимость видна сразу.</p>
+    <p class="muted">Это учебный расчёт услуг вымышленного бюро. Налоги, взносы и госпошлина в итог не входят.</p>
+    <div class="app-calc-layout">
+      <form id="app-calc-form" class="app-options" novalidate aria-label="Настройки старта"></form>
+      <aside class="app-preview" aria-label="Ваш лист записи">
+        <div id="app-calc-sheet"></div>
+        <div id="app-calc-total" class="app-total" aria-live="polite" aria-atomic="true"></div>
+        <div class="app-actions"><a class="btn btn-primary" href="#order">Оформить заявку</a><button class="btn btn-ghost" type="button" id="app-calc-reset">Сбросить</button></div>
+      </aside>
+    </div>
+    <div class="app-mobile-summary" aria-label="Итог расчёта"><div id="app-calc-mobile-total" aria-live="polite" aria-atomic="true"></div><a href="#order" class="btn btn-primary">Оформить</a></div>
+  </div></div>
+</section>
+
+<section class="view" data-view="order" hidden aria-labelledby="app-order-title">
+  <div class="band"><div class="wrap app-order-wrap">
+    <p class="eyebrow">От выбора до заявки</p>
+    <h1 class="h1" id="app-order-title">Оформить старт</h1>
+    <p class="muted">Демонстрационная заявка. Используйте вымышленные контакты. Данные никуда не отправляются и исчезнут после перезагрузки.</p>
+    <div id="app-order-root"></div>
+  </div></div>
+</section>
+
+<section class="view" data-view="cabinet" hidden aria-labelledby="app-cabinet-title">
+  <div class="band"><div class="wrap">
+    <div class="app-section-head"><div><p class="eyebrow">Без логина и пароля</p><h1 class="h1" id="app-cabinet-title">Демо-кабинет</h1></div><button type="button" class="btn btn-ghost" id="app-demo-reset">Сбросить демо</button></div>
+    <p class="muted">Здесь можно пройти весь путь и попробовать функции. Все документы и операции — образцы.</p>
+    <div id="app-cabinet-root"></div>
+    <div id="app-document-modal" class="app-modal" hidden>
+      <div class="app-dialog" role="dialog" aria-modal="true" aria-labelledby="app-document-title" tabindex="-1">
+        <div class="app-section-head"><h2 class="h3" id="app-document-title">Образец документа</h2><button class="btn btn-ghost" type="button" id="app-document-close">Закрыть</button></div>
+        <div id="app-document-content"></div>
+        <p class="muted">Учебный образец. Юридической силы не имеет. Файл не скачивается.</p>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+  </main>
+  <noscript><div class="band"><div class="wrap"><p>Для переключения разделов и работы форм включите JavaScript. Это учебный сайт; телефон: +7 (000) 000-00-00, почта: demo@example.com.</p></div></div></noscript>
+  <footer class="site-footer band">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div><a class="footer-brand" href="#home">Бюро Кудайбердина</a><p class="muted">Помогаем разобраться.<br>Сначала в шагах, потом в документах.</p><span class="mono footer-note">ОНЛАЙН · УЧЕБНЫЙ ПРОЕКТ</span></div>
+        <nav class="footer-nav" aria-label="Навигация в подвале" data-nav><a href="#ip">Регистрация ИП</a><a href="#rko">Расчётный счёт</a><a href="#prices">Все цены</a><a href="#calc">Собрать старт</a><a href="#order">Демо-заявка</a><a href="#cabinet">Демо-кабинет</a></nav>
+        <nav class="footer-nav" aria-label="О проекте" data-nav><a href="#faq">Вопросы и ответы</a><a href="#about">О бюро</a><a href="#contacts">Контакты</a><button class="text-btn" type="button" data-callback="Вопрос о старте бизнеса">Заказать звонок</button></nav>
+        <div class="footer-contacts"><span class="mono">+7 (000) 000-00-00</span><button type="button" class="text-btn" data-copy="+7 (000) 000-00-00">Скопировать телефон</button><span>demo@example.com</span><button type="button" class="text-btn" data-copy="demo@example.com">Скопировать почту</button><span class="muted">Адрес: вымышленный, офиса нет.</span></div>
+      </div>
+      <p class="project-disclaimer">Учебный проект Рустема Кудайбердина. Организация вымышленная, услуги не оказываются, данные из форм никуда не отправляются.</p>
+    </div>
+  </footer>
+</div>
+<div class="modal" id="callback-modal" hidden>
+  <div class="modal-backdrop" data-modal-backdrop></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="callback-title" aria-describedby="callback-demo">
+    <button class="icon-btn modal-close" type="button" data-modal-close aria-label="Закрыть окно"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>
+    <p class="eyebrow">ОБРАТНАЯ СВЯЗЬ / ДЕМО</p><h2 class="h2" id="callback-title">Заказать звонок</h2><p class="muted" id="callback-topic"></p>
+    <p class="small muted" id="callback-demo">Учебная форма. Данные остаются на странице, настоящий звонок не поступит. Используйте вымышленные данные.</p>
+    <form id="callback-form" novalidate>
+      <div class="field"><label for="callback-name">Как к вам обращаться</label><input id="callback-name" name="name" autocomplete="off" minlength="2" maxlength="70" required aria-describedby="callback-error"></div>
+      <div class="field"><label for="callback-phone">Телефон для примера</label><input id="callback-phone" name="phone" type="tel" inputmode="tel" autocomplete="off" maxlength="24" placeholder="+7 (000) 000-00-00" required aria-describedby="callback-error"></div>
+      <label class="check" for="callback-consent"><input id="callback-consent" name="consent" type="checkbox" required aria-describedby="callback-error"><span>Согласен на обработку введённых данных только в рамках этой демо-формы.</span></label>
+      <p class="form-error" id="callback-error" role="alert"></p><button type="submit" class="btn btn-primary">Проверить демо-заявку <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg></button>
+    </form>
+    <div id="callback-success" class="success-box" tabindex="-1" hidden><span class="pill pill-ok">Готово</span><h3 class="h3">Демо-заявка заполнена</h3><p>Форма прошла проверку. Это демонстрация: данные никуда не отправлены, звонка не будет.</p><button class="btn btn-ghost" type="button" data-modal-close>Закрыть</button></div>
+  </div>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+<div id="copy-fallback" class="copy-fallback" role="region" aria-label="Ручное копирование" hidden><div class="field"><label for="copy-value">Текст для ручного копирования</label><input id="copy-value" type="text" readonly></div><p class="small">Скопируйте выделенный текст через меню или Ctrl+C.</p><button id="copy-dismiss" class="btn btn-ghost btn-small" type="button">Закрыть</button></div>
+
+<script>
+(() => {
+  'use strict';
+
+  document.documentElement.lang = 'ru';
+
+  const PRICES = {
+    reg: {
+      start: { name: 'Сам с проверкой', price: 990, description: 'Готовим заявление Р21001, проверяем и даём инструкцию по подаче.', features: ['Заявление Р21001', 'Проверка заполнения', 'Инструкция по подаче'] },
+      turnkey: { name: 'Под ключ', price: 2900, description: 'Всё из тарифа «Сам с проверкой», подбор ОКВЭД и налогового режима, КЭП и подача в ФНС онлайн.', features: ['Всё из тарифа «Сам с проверкой»', 'Подбор ОКВЭД и налогового режима', 'КЭП и подача в ФНС онлайн'] },
+      care: { name: 'Под ключ и бухгалтер', price: 7900, description: 'Всё из тарифа «Под ключ» и три месяца сопровождения бухгалтером.', features: ['Всё из тарифа «Под ключ»', 'Три месяца сопровождения бухгалтером', 'Помощь с первыми отчётами'] }
+    },
+    rko: {
+      zero: { name: 'Ноль', price: 0, freePayments: 5, paymentPrice: 99, withdrawalLimit: 150000, withdrawalRate: 1.5, currencyControl: false },
+      flow: { name: 'Поток', price: 1490, freePayments: 50, paymentPrice: 49, withdrawalLimit: 500000, withdrawalRate: 0, currencyControl: false },
+      stream: { name: 'Оборот', price: 3900, freePayments: Infinity, paymentPrice: 0, withdrawalLimit: 1500000, withdrawalRate: 0, currencyControl: true }
+    },
+    extras: {
+      acc: { name: 'Бухгалтер', price: 3900, monthly: true },
+      law: { name: 'Консультация юриста', price: 1500, monthly: false },
+      kep: { name: 'КЭП отдельно', price: 1200, monthly: false },
+      edit: { name: 'Изменения в ЕГРИП', price: 1900, monthly: false },
+      close: { name: 'Закрытие ИП', price: 1900, monthly: false }
+    }
+  };
+  const titles = { home: 'ИП и счёт — с понятного старта', ip: 'Регистрация ИП', rko: 'Расчётный счёт', prices: 'Цены', faq: 'Вопросы и ответы', about: 'О бюро', contacts: 'Контакты', calc: 'Собрать старт', order: 'Оформить демо-заявку', cabinet: 'Демо-кабинет', notfound: 'Раздел не найден' };
+  const callbacks = new Set();
+  let currentView = null;
+  let toastTimer;
+  let previousFocus;
+  const rub = n => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 2 }).format(Number(n) || 0).replace(/\u00a0/g, ' ') + ' ₽';
+  const state = { reg: 'turnkey', rko: 'flow', extras: [], tax: 'usn6', okved: [], order: null };
+
+  function toast(text) {
+    const target = document.getElementById('toast');
+    if (!target) return;
+    clearTimeout(toastTimer);
+    target.textContent = text;
+    target.hidden = false;
+    toastTimer = setTimeout(() => { target.hidden = true; target.textContent = ''; }, 4000);
+  }
+
+  function go(view) {
+    const next = String(view).replace(/^#/, '');
+    if (location.hash === '#' + next) route();
+    else location.hash = next;
+  }
+
+  function closeMenu() {
+    const menu = document.getElementById('header-menu');
+    const toggle = document.getElementById('menu-toggle');
+    if (menu) menu.classList.remove('is-open');
+    if (toggle) { toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Открыть меню'); }
+  }
+
+  function route() {
+    const requested = location.hash.slice(1) || 'home';
+    const views = [...document.querySelectorAll('.view[data-view]')];
+    const active = views.find(el => el.dataset.view === requested) || views.find(el => el.dataset.view === 'notfound');
+    if (!active) return;
+    closeModal(false);
+    currentView = active.dataset.view;
+    views.forEach(el => { el.hidden = el !== active; });
+    document.title = currentView === 'home' ? 'Бюро Кудайбердина — ИП и счёт' : (titles[currentView] || currentView) + ' — Бюро Кудайбердина';
+    document.querySelectorAll('[data-nav] a[href^="#"]').forEach(link => {
+      if (link.getAttribute('href') === '#' + currentView) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+    closeMenu();
+    callbacks.forEach(fn => fn(currentView));
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    const heading = active.querySelector('h1');
+    if (heading) { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+  }
+
+  function closeModal(restore = true) {
+    const modal = document.getElementById('callback-modal');
+    if (!modal || modal.hidden) return;
+    modal.hidden = true;
+    document.body.classList.remove('modal-open');
+    const page = document.getElementById('page-shell');
+    if (page) page.inert = false;
+    if (restore && previousFocus?.isConnected) previousFocus.focus();
+  }
+
+  function openCallback(topic = 'Помощь со стартом') {
+    const modal = document.getElementById('callback-modal');
+    if (!modal) return;
+    previousFocus = document.activeElement;
+    const form = document.getElementById('callback-form');
+    form.reset();
+    form.hidden = false;
+    document.getElementById('callback-success').hidden = true;
+    document.getElementById('callback-topic').textContent = topic || 'Помощь со стартом';
+    document.getElementById('callback-error').textContent = '';
+    form.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+    modal.hidden = false;
+    document.body.classList.add('modal-open');
+    const page = document.getElementById('page-shell');
+    if (page) page.inert = true;
+    document.getElementById('callback-name').focus();
+  }
+
+  async function copy(text, btn) {
+    const value = String(text);
+    try {
+      await navigator.clipboard.writeText(value);
+      toast('Скопировано: ' + value);
+      if (btn) {
+        const original = btn.textContent;
+        btn.textContent = 'Скопировано';
+        setTimeout(() => { btn.textContent = original; }, 2000);
+      }
+    } catch {
+      const fallback = document.getElementById('copy-fallback');
+      const input = document.getElementById('copy-value');
+      if (!fallback || !input) { toast('Не удалось скопировать. Выделите текст и скопируйте вручную.'); return; }
+      fallback.hidden = false;
+      input.value = value;
+      input.focus();
+      input.select();
+      input.setSelectionRange(0, value.length);
+      toast('Текст выделен. Скопируйте его вручную: Ctrl+C или через меню выделения.');
+    }
+  }
+
+  window.BK = { PRICES, rub, go, toast, openCallback, copy, state, onView(fn) { callbacks.add(fn); if (currentView) fn(currentView); return () => callbacks.delete(fn); } };
+
+  const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  function isDark() { return document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && colorScheme.matches); }
+  function themeLabel() {
+    const toggle = document.getElementById('theme-toggle');
+    if (!toggle) return;
+    toggle.setAttribute('aria-pressed', String(isDark()));
+    toggle.setAttribute('aria-label', isDark() ? 'Включить светлую тему' : 'Включить тёмную тему');
+    toggle.querySelector('[data-theme-label]').textContent = isDark() ? 'Светлая' : 'Тёмная';
+  }
+  try { const saved = localStorage.getItem('bk-theme'); if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved; } catch { /* Тема работает и без хранилища. */ }
+
+  document.addEventListener('click', event => {
+    const target = event.target.closest('button, a, [data-modal-backdrop]');
+    if (!target) return;
+    if (target.matches('[data-callback]')) { event.preventDefault(); openCallback(target.dataset.callback); }
+    else if (target.matches('[data-plan-reg], [data-plan-rko]')) {
+      event.preventDefault();
+      if (Object.hasOwn(PRICES.reg, target.dataset.planReg)) state.reg = target.dataset.planReg;
+      if (Object.hasOwn(PRICES.rko, target.dataset.planRko)) state.rko = target.dataset.planRko;
+      go('order');
+    } else if (target.matches('[data-copy]')) { event.preventDefault(); copy(target.dataset.copy, target); }
+    else if (target.matches('[data-modal-close], [data-modal-backdrop]')) closeModal();
+    else if (target.id === 'theme-toggle') {
+      const theme = isDark() ? 'light' : 'dark';
+      document.documentElement.dataset.theme = theme;
+      try { localStorage.setItem('bk-theme', theme); } catch { /* Необязательное сохранение. */ }
+      themeLabel();
+    } else if (target.id === 'menu-toggle') {
+      const open = target.getAttribute('aria-expanded') !== 'true';
+      target.setAttribute('aria-expanded', String(open));
+      target.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      document.getElementById('header-menu').classList.toggle('is-open', open);
+    } else if (target.id === 'copy-dismiss') document.getElementById('copy-fallback').hidden = true;
+    else if (target.matches('[data-scroll]')) {
+      const section = document.getElementById(target.dataset.scroll);
+      if (section) section.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+    } else if (target.matches('a[href^="#"]') && target.getAttribute('href') === location.hash) {
+      event.preventDefault(); route();
+    }
+  });
+
+  document.addEventListener('keydown', event => {
+    const modal = document.getElementById('callback-modal');
+    if (event.key === 'Escape') {
+      if (modal && !modal.hidden) closeModal();
+      else closeMenu();
+    }
+    if (!modal || modal.hidden || event.key !== 'Tab') return;
+    const focusable = [...modal.querySelectorAll('button, input, a[href], [tabindex="0"]')].filter(el => !el.disabled && el.getClientRects().length);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
+
+  function init() {
+    themeLabel();
+    colorScheme.addEventListener('change', themeLabel);
+    document.getElementById('callback-form')?.addEventListener('submit', event => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const name = document.getElementById('callback-name');
+      const phone = document.getElementById('callback-phone');
+      const consent = document.getElementById('callback-consent');
+      const fields = [[name, name.value.trim().length >= 2], [phone, /^\+?[\d\s()\-]+$/.test(phone.value.trim()) && phone.value.replace(/\D/g, '').length >= 10 && phone.value.replace(/\D/g, '').length <= 15], [consent, consent.checked]];
+      fields.forEach(([field, valid]) => field.setAttribute('aria-invalid', String(!valid)));
+      const invalid = fields.find(([, valid]) => !valid);
+      if (invalid) {
+        document.getElementById('callback-error').textContent = 'Укажите имя от двух символов, телефон от 10 до 15 цифр и подтвердите согласие.';
+        invalid[0].focus(); return;
+      }
+      form.hidden = true;
+      const success = document.getElementById('callback-success');
+      success.hidden = false;
+      success.focus();
+      form.reset();
+    });
+    window.addEventListener('hashchange', route);
+    route();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else queueMicrotask(init);
+})();
+
+(() => {
+  'use strict';
+  const { PRICES, rub } = window.BK;
+  const BK = window.BK;
+  const arrow = '<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg>';
+  const payments = plan => Number.isFinite(plan.freePayments) ? plan.freePayments + ' в пакете, затем ' + rub(plan.paymentPrice) + ' за платёж' : 'Без лимита';
+  const withdrawal = plan => 'До ' + rub(plan.withdrawalLimit) + '/мес ' + (plan.withdrawalRate ? 'под ' + String(plan.withdrawalRate).replace('.', ',') + '%' : 'без комиссии');
+  const each = (selector, html) => document.querySelectorAll(selector).forEach(el => { el.innerHTML = html; });
+
+  each('[data-reg-plans]', Object.entries(PRICES.reg).map(([id, plan]) => `<article class="plan ${id === 'turnkey' ? 'is-featured' : ''}">
+    <div class="plan-head">${id === 'turnkey' ? '<p class="eyebrow">С ПОДАЧЕЙ ОНЛАЙН</p>' : '<p class="eyebrow">РЕГИСТРАЦИЯ ИП</p>'}<h3 class="h3">${plan.name}</h3></div>
+    <p class="plan-price">${rub(plan.price)} <small>разово</small></p><ul>${plan.features.map(feature => '<li>' + feature + '</li>').join('')}</ul>
+    <button class="btn ${id === 'turnkey' ? 'btn-primary' : 'btn-ghost'}" type="button" data-plan-reg="${id}">Выбрать тариф ${arrow}</button></article>`).join(''));
+
+  each('[data-rko-plans]', Object.entries(PRICES.rko).map(([id, plan]) => `<article class="plan ${id === 'flow' ? 'is-featured' : ''}">
+    <div class="plan-head"><p class="eyebrow">РАСЧЁТНЫЙ СЧЁТ</p><h3 class="h3">${plan.name}</h3></div><p class="plan-price">${rub(plan.price)} <small>/мес</small></p>
+    <ul><li>${payments(plan)}</li><li>${withdrawal(plan)}</li>${plan.currencyControl ? '<li>Валютный контроль</li>' : ''}</ul><button class="btn ${id === 'flow' ? 'btn-primary' : 'btn-ghost'}" type="button" data-plan-rko="${id}">Выбрать счёт ${arrow}</button></article>`).join(''));
+
+  each('[data-reg-price-rows]', Object.entries(PRICES.reg).map(([id, plan]) => `<tr><th scope="row">${plan.name}</th><td>${plan.description}</td><td class="mono">${rub(plan.price)}</td><td><button class="btn btn-ghost btn-small" type="button" data-plan-reg="${id}" aria-label="Выбрать регистрацию: ${plan.name}">Выбрать</button></td></tr>`).join(''));
+  each('[data-rko-price-rows]', Object.entries(PRICES.rko).map(([id, plan]) => `<tr><th scope="row">${plan.name}</th><td class="mono">${rub(plan.price)}</td><td>${payments(plan)}${plan.currencyControl ? '. Валютный контроль' : ''}</td><td>${withdrawal(plan)}</td><td><button class="btn btn-ghost btn-small" type="button" data-plan-rko="${id}" aria-label="Выбрать счёт: ${plan.name}">Выбрать</button></td></tr>`).join(''));
+  each('[data-extra-price-rows]', Object.values(PRICES.extras).map(plan => `<tr><th scope="row">${plan.name}</th><td class="mono">${rub(plan.price)}</td><td>${plan.monthly ? 'В месяц' : 'Разово'}</td></tr>`).join(''));
+  each('[data-home-rko]', Object.values(PRICES.rko).map(plan => `<tr><th scope="row">${plan.name}</th><td class="mono">${rub(plan.price)}</td><td>${Number.isFinite(plan.freePayments) ? plan.freePayments + ' в пакете' : 'Без лимита'}</td></tr>`).join(''));
+
+  const rkoPlans = Object.values(PRICES.rko);
+  const comparisonRows = [
+    ['Обслуживание в месяц', plan => rub(plan.price)],
+    ['Исходящие платежи', payments],
+    ['Вывод себе в месяц', withdrawal],
+    ['Валютный контроль', plan => plan.currencyControl ? 'Предусмотрен' : 'Не указан в тарифе']
+  ];
+  each('[data-rko-comparison]', '<thead><tr><th scope="col">Условие</th>' + rkoPlans.map(plan => '<th scope="col">' + plan.name + '</th>').join('') + '</tr></thead><tbody>' + comparisonRows.map(([title, value]) => '<tr><th scope="row">' + title + '</th>' + rkoPlans.map(plan => '<td>' + value(plan) + '</td>').join('') + '</tr>').join('') + '</tbody>');
+  each('[data-rko-options]', Object.entries(PRICES.rko).map(([id, plan]) => `<option value="${id}">${plan.name} · ${rub(plan.price)}/мес</option>`).join(''));
+
+  function updateHome() {
+    const tax = document.getElementById('home-tax');
+    const account = document.getElementById('home-account');
+    if (tax && [...tax.options].some(option => option.value === BK.state.tax)) tax.value = BK.state.tax;
+    if (account && Object.hasOwn(PRICES.rko, BK.state.rko)) account.value = BK.state.rko;
+  }
+  ['home-tax', 'home-account'].forEach(id => document.getElementById(id)?.addEventListener('change', event => {
+    const input = event.currentTarget;
+    if (id === 'home-tax') BK.state.tax = input.value;
+    else BK.state.rko = input.value;
+    const tax = document.getElementById('home-tax');
+    const plan = PRICES.rko[BK.state.rko];
+    document.getElementById('home-sheet-status').textContent = 'Лист обновлён: ' + tax.options[tax.selectedIndex].text + ', счёт «' + plan.name + '». Выбор перенесён в калькулятор. Это образец.';
+  }));
+
+  function selectTab(value, focus = false) {
+    const tabs = [...document.querySelectorAll('[data-tax-tab]')];
+    if (!tabs.some(tab => tab.dataset.taxTab === value)) return;
+    tabs.forEach(tab => {
+      const selected = tab.dataset.taxTab === value;
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
+      if (focus && selected) tab.focus();
+    });
+  }
+  document.querySelectorAll('[data-tax-tab]').forEach(tab => {
+    tab.addEventListener('click', () => selectTab(tab.dataset.taxTab));
+    tab.addEventListener('keydown', event => {
+      if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const tabs = [...document.querySelectorAll('[data-tax-tab]')];
+      let index = tabs.indexOf(tab);
+      if (event.key === 'Home') index = 0;
+      else if (event.key === 'End') index = tabs.length - 1;
+      else index = (index + (event.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+      selectTab(tabs[index].dataset.taxTab, true);
+    });
+  });
+  document.querySelectorAll('[data-tax-choose]').forEach(button => button.addEventListener('click', () => {
+    BK.state.tax = button.dataset.taxChoose;
+    BK.go('calc');
+  }));
+
+  const countInput = document.getElementById('rko-payments');
+  const bestButton = document.getElementById('rko-select-best');
+  function calculateRko() {
+    if (!countInput) return;
+    const count = Number(countInput.value);
+    const valid = countInput.value.trim() !== '' && Number.isInteger(count) && count >= 0 && count <= 100000;
+    countInput.setAttribute('aria-invalid', String(!valid));
+    document.getElementById('rko-payments-error').textContent = valid ? '' : 'Введите целое число платежей от 0 до 100 000.';
+    bestButton.disabled = !valid;
+    if (!valid) {
+      document.getElementById('rko-costs').textContent = 'Исправьте число платежей, чтобы увидеть расчёт.';
+      document.getElementById('rko-best').textContent = '';
+      delete bestButton.dataset.planRko;
+      return;
+    }
+    const totals = Object.entries(PRICES.rko).map(([id, plan]) => ({ id, name: plan.name, total: plan.price + Math.max(0, count - plan.freePayments) * plan.paymentPrice }));
+    const cheapest = [...totals].sort((a, b) => a.total - b.total)[0];
+    document.getElementById('rko-costs').innerHTML = totals.map(plan => `<div class="cost-line ${plan.id === cheapest.id ? 'is-best' : ''}"><span>${plan.name}${plan.id === cheapest.id ? ' · минимум' : ''}</span><strong>${rub(plan.total)}</strong></div>`).join('');
+    document.getElementById('rko-best').textContent = 'При ' + count + ' платежах минимальная стоимость — у тарифа «' + cheapest.name + '». Только обслуживание и исходящие платежи.';
+    bestButton.dataset.planRko = cheapest.id;
+    bestButton.textContent = 'Выбрать «' + cheapest.name + '»';
+  }
+  countInput?.addEventListener('input', calculateRko);
+
+  const search = document.getElementById('faq-search');
+  const faqItems = [...document.querySelectorAll('#faq-questions .faq-item')];
+  const normalize = value => value.toLocaleLowerCase('ru-RU').replace(/ё/g, 'е').trim();
+  function filterFaq() {
+    const words = normalize(search.value).split(/\s+/).filter(Boolean);
+    let found = 0;
+    faqItems.forEach(item => {
+      const matches = words.every(word => normalize(item.textContent).includes(word));
+      item.hidden = !matches;
+      if (matches) found++;
+      else item.open = false;
+    });
+    document.getElementById('faq-count').textContent = 'Вопросов: ' + found + ' из ' + faqItems.length;
+    document.getElementById('faq-empty').hidden = found !== 0;
+    document.getElementById('faq-questions').hidden = found === 0;
+  }
+  search?.addEventListener('input', filterFaq);
+  document.getElementById('faq-reset')?.addEventListener('click', () => { search.value = ''; filterFaq(); search.focus(); });
+
+  const contactForm = document.getElementById('contact-form');
+  contactForm?.addEventListener('submit', event => {
+    event.preventDefault();
+    const topic = document.getElementById('contact-topic');
+    const name = document.getElementById('contact-name');
+    const message = document.getElementById('contact-message');
+    const consent = document.getElementById('contact-consent');
+    const fields = [[topic, topic.value !== ''], [name, name.value.trim().length >= 2], [message, message.value.trim().length >= 10], [consent, consent.checked]];
+    fields.forEach(([field, valid]) => field.setAttribute('aria-invalid', String(!valid)));
+    const invalid = fields.find(([, valid]) => !valid);
+    if (invalid) {
+      document.getElementById('contact-error').textContent = 'Выберите тему, укажите имя от двух символов, вопрос от 10 символов и подтвердите согласие.';
+      invalid[0].focus(); return;
+    }
+    document.getElementById('contact-error').textContent = '';
+    contactForm.hidden = true;
+    const success = document.getElementById('contact-success');
+    success.hidden = false;
+    success.focus();
+    contactForm.reset();
+  });
+  document.getElementById('contact-again')?.addEventListener('click', () => {
+    document.getElementById('contact-success').hidden = true;
+    contactForm.hidden = false;
+    contactForm.querySelectorAll('[aria-invalid]').forEach(el => el.removeAttribute('aria-invalid'));
+    document.getElementById('contact-topic').focus();
+  });
+
+  BK.onView(view => {
+    if (view === 'home') updateHome();
+    if (view === 'ip') selectTab(BK.state.tax);
+    if (view === 'rko') calculateRko();
+    if (view === 'faq') filterFaq();
+  });
+  updateHome();
+  calculateRko();
+  if (search) filterFaq();
+})();
+
+(function () {
+  'use strict';
+
+  const BK = window.BK;
+  if (!BK) return;
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const esc = value => String(value == null ? '' : value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+  const defaults = { reg: 'turnkey', rko: 'flow', extras: [], tax: 'usn6', okved: [] };
+  const catalog = {
+    reg: {
+      start: ['Сам с проверкой', 990, 'Заявление Р21001, проверка и инструкция.'],
+      turnkey: ['Под ключ', 2900, 'Подбор ОКВЭД и режима, КЭП, подача онлайн.'],
+      care: ['Под ключ и бухгалтер', 7900, 'Всё под ключ и три месяца сопровождения бухгалтером.']
+    },
+    rko: {
+      zero: ['Ноль', 0, '5 платежей бесплатно, далее 99 ₽.'],
+      flow: ['Поток', 1490, '50 платежей, далее 49 ₽.'],
+      stream: ['Оборот', 3900, 'Платежи без лимита; валютный контроль.']
+    },
+    extras: {
+      acc: ['Бухгалтер', 3900], law: ['Консультация юриста', 1500],
+      kep: ['Отдельно КЭП', 1200], edit: ['Изменения в ЕГРИП', 1900], close: ['Закрытие ИП', 1900]
+    }
+  };
+  const taxes = {
+    usn6: ['УСН 6%', 'Налог с доходов. Подходит для сравнения, если расходов немного.'],
+    usn15: ['УСН 15%', 'Доходы минус подтверждённые расходы. Важен учёт затрат.'],
+    patent: ['Патент', 'Для отдельных видов деятельности. Условия зависят от региона.'],
+    ausn: ['АУСН', 'Автоматизированный режим. Нужно проверить доступность и условия.'],
+    npd: ['НПД', 'Для самостоятельной работы. Есть ограничения по деятельности и найму.']
+  };
+  const activities = [
+    ['62.01', 'Разработка компьютерного программного обеспечения'],
+    ['47.91', 'Розничная торговля по почте или через интернет'],
+    ['73.11', 'Деятельность рекламных агентств'],
+    ['96.02', 'Услуги парикмахерских и салонов красоты'],
+    ['43.31', 'Производство штукатурных работ'],
+    ['85.41', 'Дополнительное образование детей и взрослых'],
+    ['49.32', 'Деятельность легкового такси и арендованных автомобилей с водителем'],
+    ['56.10', 'Деятельность ресторанов и услуги по доставке продуктов питания'],
+    ['74.10', 'Специализированная деятельность в области дизайна'],
+    ['63.11', 'Обработка данных и размещение информации']
+  ];
+  const stages = ['Заявка принята', 'Документы готовы', 'КЭП выпущена', 'Подано в ФНС', 'Запись ЕГРИП', 'Счёт открыт'];
+  const kepWays = { office: 'В учебном центре выдачи', visit: 'С выездом специалиста (демо)', help: 'Нужна помощь с выбором' };
+  const callTimes = { morning: '09:00–12:00', day: '12:00–15:00', evening: '15:00–18:00', any: 'Любое время с 09:00 до 18:00' };
+  const documents = [
+    { id: 'application', name: 'Заявление Р21001', step: 1 },
+    { id: 'tax', name: 'Выбранный налоговый режим', step: 1 },
+    { id: 'signature', name: 'Подтверждение выпуска КЭП', step: 2 },
+    { id: 'receipt', name: 'Квитанция о подаче в ФНС', step: 3 },
+    { id: 'registry', name: 'Лист записи ЕГРИП — ОБРАЗЕЦ', step: 4 },
+    { id: 'account', name: 'Реквизиты счёта — ОБРАЗЕЦ', step: 5 }
+  ];
+  let wizard = freshWizard();
+  let completed = false;
+  let activeTab = 'status';
+  let sampleExpanded = false;
+  let sampleOrder = null;
+  let modalReturn = null;
+  let serial = 0;
+
+  function freshWizard() {
+    return { step: 0, name: '', phone: '', city: '', email: '', kep: 'help', callTime: 'any', consent: false };
+  }
+
+  // The brief fixes the keys and amounts, but leaves the PRICES item shape open.
+  function price(group, id) {
+    const fallback = catalog[group][id];
+    const source = BK.PRICES && BK.PRICES[group] && BK.PRICES[group][id];
+    const raw = typeof source === 'number' ? source : source && (source.price ?? source.amount ?? source.monthly ?? source.cost);
+    return { name: (source && (source.name || source.title)) || fallback[0], amount: Number.isFinite(Number(raw)) && raw != null ? Number(raw) : fallback[1], hint: fallback[2] || '' };
+  }
+
+  function normalize() {
+    const state = BK.state;
+    if (!Object.hasOwn(catalog.reg, state.reg)) state.reg = defaults.reg;
+    if (!Object.hasOwn(catalog.rko, state.rko)) state.rko = defaults.rko;
+    if (!Object.hasOwn(taxes, state.tax)) state.tax = defaults.tax;
+    state.extras = [...new Set((Array.isArray(state.extras) ? state.extras : []).filter(id => Object.hasOwn(catalog.extras, id)))];
+    state.okved = [...new Set((Array.isArray(state.okved) ? state.okved : []).filter(code => activities.some(item => item[0] === code)))];
+  }
+
+  function selection() {
+    normalize();
+    return { reg: BK.state.reg, rko: BK.state.rko, tax: BK.state.tax, extras: [...BK.state.extras], okved: [...BK.state.okved] };
+  }
+
+  function totals(config) {
+    return config.extras.reduce((sum, id) => {
+      sum[id === 'acc' ? 'monthly' : 'once'] += price('extras', id).amount;
+      return sum;
+    }, { once: price('reg', config.reg).amount, monthly: price('rko', config.rko).amount });
+  }
+
+  function totalHTML(config) {
+    const sum = totals(config);
+    return `<div><small>Разово</small><strong>${esc(BK.rub(sum.once))}</strong></div><div><small>В месяц</small><strong>${esc(BK.rub(sum.monthly))}</strong></div>`;
+  }
+
+  function sheetHTML(config, options = {}) {
+    const rows = [
+      ['01', 'Форма', 'Индивидуальный предприниматель'],
+      ['02', 'Регистрация', price('reg', config.reg).name],
+      ['03', 'Налоговый режим', taxes[config.tax][0]],
+      ['04', 'ОКВЭД', config.okved.length ? config.okved.join(' · ') : 'Выберите виды деятельности'],
+      ['05', 'Счёт', `${price('rko', config.rko).name} · банк-партнёр бюро (вымышленный)`],
+      ['06', 'Дополнительно', config.extras.length ? config.extras.map(id => price('extras', id).name).join(', ') : 'Без дополнительных услуг']
+    ];
+    if (options.person) rows.unshift(['00', 'Заявитель', options.person]);
+    return `<article class="sheet app-sheet"><div class="app-sheet-head"><div><p class="app-sheet-title">ЛИСТ ЗАПИСИ</p><p class="app-hint">${options.registry ? 'ЕГРИП · учебный образец' : 'Ваш будущий старт · черновик'}</p></div><span class="app-sample">ОБРАЗЕЦ</span></div>${rows.map(row => `<div class="sheet-row app-sheet-row"><span>${row[0]}</span><span>${row[1]}</span><strong>${esc(row[2])}</strong></div>`).join('')}${options.registry ? '<p class="mono app-hint">ОБРАЗЕЦ · ГРНИП: ДЕМО-0000. Номер вымышленный.</p>' : ''}${options.stamp ? `<div class="app-stamp-space"><span class="stamp app-stamp${options.animate ? ' app-stamp-drop' : ''}">${esc(options.stamp)}<small>ОБРАЗЕЦ</small></span></div>` : ''}<p class="app-sheet-note">Это визуальный образец, а не документ ФНС. Выбор налогового режима нужно проверить под вашу деятельность.</p></article>`;
+  }
+
+  function choicesHTML(prefix) {
+    const state = selection();
+    const plans = (group, title) => `<fieldset class="app-group"><legend>${title}</legend><div class="app-choices">${Object.keys(catalog[group]).map(id => {
+      const item = price(group, id);
+      return `<label class="app-choice" for="${prefix}-${group}-${id}"><input type="radio" id="${prefix}-${group}-${id}" name="${group}" value="${id}" data-app-choice="${group}"${state[group] === id ? ' checked' : ''}><span><strong>${esc(item.name)}</strong><small>${esc(item.hint)}</small></span><span class="app-price">${esc(BK.rub(item.amount))}${group === 'rko' ? '/мес' : ''}</span></label>`;
+    }).join('')}</div></fieldset>`;
+    return plans('reg', 'Тариф регистрации') + `<fieldset class="app-group"><legend>Налоговый режим</legend><div class="field app-field"><label for="${prefix}-tax">Как считать налог</label><select id="${prefix}-tax" name="tax" data-app-choice="tax" aria-describedby="${prefix}-tax-hint">${Object.entries(taxes).map(([id, item]) => `<option value="${id}"${state.tax === id ? ' selected' : ''}>${item[0]}</option>`).join('')}</select><p id="${prefix}-tax-hint" class="app-hint" data-app-tax-hint>${esc(taxes[state.tax][1])}</p></div><p class="app-hint">Список для знакомства. Совместимость режима и ОКВЭД в демо не проверяется.</p></fieldset><fieldset class="app-group"><legend>Чем займётесь</legend><p class="app-hint">Отметьте один или несколько кодов ОКВЭД.</p><div class="app-okved">${activities.map(([code, name]) => `<label class="check app-check" for="${prefix}-okved-${code.replace('.', '-')}"><input type="checkbox" id="${prefix}-okved-${code.replace('.', '-')}" name="okved" value="${code}" data-app-choice="okved"${state.okved.includes(code) ? ' checked' : ''}><span><code>${code}</code> ${name}</span></label>`).join('')}</div><span class="app-error" id="${prefix}-okved-error" role="status"></span></fieldset>` + plans('rko', 'Тариф РКО') + `<fieldset class="app-group"><legend>Дополнительные услуги</legend><div class="app-choices">${Object.keys(catalog.extras).map(id => {
+      const item = price('extras', id);
+      return `<label class="app-choice" for="${prefix}-extras-${id}"><input type="checkbox" id="${prefix}-extras-${id}" name="extras" value="${id}" data-app-choice="extras"${state.extras.includes(id) ? ' checked' : ''}><span>${esc(item.name)}</span><span class="app-price">${esc(BK.rub(item.amount))}${id === 'acc' ? '/мес' : ''}</span></label>`;
+    }).join('')}</div><p class="app-hint">КЭП уже входит в тарифы «Под ключ». Отдельную КЭП выбирайте для другой задачи. В тариф «Под ключ и бухгалтер» включены три месяца сопровождения; дополнительный бухгалтер считается отдельно, ежемесячно.</p></fieldset>`;
+  }
+
+  function renderCalc() {
+    $('#app-calc-form').innerHTML = choicesHTML('app-calc');
+    updateCalc();
+  }
+
+  function updateCalc() {
+    const config = selection();
+    $('#app-calc-sheet').innerHTML = sheetHTML(config);
+    $('#app-calc-total').innerHTML = totalHTML(config);
+    $('#app-calc-mobile-total').innerHTML = totalHTML(config);
+  }
+
+  function updateChoice(input) {
+    const key = input.dataset.appChoice;
+    if (key === 'okved' || key === 'extras') {
+      const values = new Set(BK.state[key]);
+      if (input.checked) values.add(input.value); else values.delete(input.value);
+      BK.state[key] = [...values];
+    } else BK.state[key] = input.value;
+    normalize();
+    const form = input.closest('form');
+    const hint = $('[data-app-tax-hint]', form);
+    if (hint) hint.textContent = taxes[BK.state.tax][1];
+    if (form.id === 'app-calc-form') updateCalc();
+    else {
+      const total = $('#app-order-total');
+      if (total) total.innerHTML = totalHTML(selection());
+      const error = $('#app-order-okved-error');
+      if (error && BK.state.okved.length) error.textContent = '';
+    }
+  }
+
+  function field(name, label, type = 'text', autocomplete = '') {
+    return `<div class="field app-field"><label for="app-order-${name}">${label}</label><input id="app-order-${name}" name="${name}" type="${type}" value="${esc(wizard[name])}" data-app-draft="${name}"${autocomplete ? ` autocomplete="${autocomplete}"` : ''}${name === 'email' ? '' : ' required'}${name === 'phone' ? ' inputmode="tel" maxlength="30"' : ' maxlength="120"'} aria-describedby="app-order-${name}-error"><span class="app-error" id="app-order-${name}-error" role="status"></span></div>`;
+  }
+
+  function selectField(name, label, values) {
+    return `<div class="field app-field"><label for="app-order-${name}">${label}</label><select id="app-order-${name}" name="${name}" data-app-draft="${name}" aria-describedby="app-order-${name}-error">${Object.entries(values).map(([id, title]) => `<option value="${id}"${wizard[name] === id ? ' selected' : ''}>${title}</option>`).join('')}</select><span class="app-error" id="app-order-${name}-error" role="status"></span></div>`;
+  }
+
+  function reviewHTML() {
+    const config = selection();
+    const rows = [
+      ['Имя', wizard.name], ['Телефон', wizard.phone], ['Город', wizard.city], ['Почта', wizard.email || 'Не указана'],
+      ['КЭП', kepWays[wizard.kep]], ['Звонок', `${callTimes[wizard.callTime]} · местное время города заявителя`]
+    ];
+    return `<div class="grid-2"><div>${sheetHTML(config)}</div><div><h2 class="h3">Проверьте контакты</h2><dl class="app-review">${rows.map(([key, value]) => `<dt>${key}</dt><dd>${esc(value)}</dd>`).join('')}</dl><div class="app-total">${totalHTML(config)}</div></div></div><label class="check app-check" for="app-order-consent"><input type="checkbox" id="app-order-consent" name="consent" data-app-draft="consent"${wizard.consent ? ' checked' : ''} aria-describedby="app-order-consent-error"><span>Согласен на обработку введённых контактов в рамках этой демонстрации. Понимаю, что данные остаются только в памяти страницы.</span></label><span class="app-error" id="app-order-consent-error" role="status"></span>`;
+  }
+
+  function renderOrder(focus = false) {
+    const root = $('#app-order-root');
+    if (completed && BK.state.order) {
+      const order = BK.state.order;
+      root.innerHTML = `<div class="app-success" role="status"><h2 class="h2" tabindex="-1" id="app-order-success">Заявка принята</h2><p><strong class="mono">${esc(order.number)}</strong> · ${esc(dateLabel(order.date))}</p>${sheetHTML(order.data.selection, { person: order.data.name, stamp: 'ЗАЯВКА ПРИНЯТА', animate: true })}<p class="app-note">Заявка демонстрационная. Мы никуда её не отправили. Статусы в кабинете меняются по вашей кнопке.</p><div class="app-actions"><a href="#cabinet" class="btn btn-primary">Открыть кабинет</a><button type="button" class="btn btn-ghost" data-app-action="new-order">Новая заявка</button></div></div>`;
+      if (focus) $('#app-order-success').focus();
+      return;
+    }
+    const labels = ['Выбор', 'Контакты', 'КЭП и звонок', 'Проверка'];
+    let body = '';
+    if (wizard.step === 0) body = `<h2 class="h2" id="app-order-step-title" tabindex="-1">Проверьте ваш выбор</h2><p class="muted">Тарифы можно изменить здесь. Для продолжения отметьте хотя бы один вид деятельности.</p>${choicesHTML('app-order')}<div id="app-order-total" class="app-total" aria-live="polite" aria-atomic="true">${totalHTML(selection())}</div>`;
+    if (wizard.step === 1) body = `<h2 class="h2" id="app-order-step-title" tabindex="-1">Как с вами связаться</h2><div class="app-fields">${field('name', 'Ваше имя', 'text', 'given-name')}${field('phone', 'Телефон', 'tel', 'tel')}${field('city', 'Город', 'text', 'address-level2')}${field('email', 'Почта — необязательно', 'email', 'email')}</div><p class="app-hint">Для телефона нужно от 10 до 15 цифр. Пример учебного номера: +7 (000) 000-00-00.</p>`;
+    if (wizard.step === 2) body = `<h2 class="h2" id="app-order-step-title" tabindex="-1">КЭП и удобное время</h2>${selectField('kep', 'Как получить КЭП', kepWays)}${selectField('callTime', 'Когда вам удобно поговорить', callTimes)}<p class="app-hint">Время указано для вашего города: ${esc(wizard.city)}. Это выбор для демо; реальный звонок не состоится.</p>`;
+    if (wizard.step === 3) body = `<h2 class="h2" id="app-order-step-title" tabindex="-1">Всё верно?</h2>${reviewHTML()}`;
+    root.innerHTML = `<ol class="app-steps" aria-label="Шаги заявки">${labels.map((label, index) => `<li${index === wizard.step ? ' aria-current="step"' : ''}${index < wizard.step ? ' class="app-step-done"' : ''}><span class="app-step-number">${index + 1} / 4</span>${label}</li>`).join('')}</ol><form id="app-order-form" class="app-order-form" novalidate>${body}<div class="app-actions">${wizard.step ? '<button type="button" class="btn btn-ghost" data-app-action="back">Назад</button>' : '<a href="#calc" class="btn btn-ghost">К конструктору</a>'}<button type="submit" class="btn btn-primary">${wizard.step === 3 ? 'Отправить демо-заявку' : 'Далее'}</button></div></form>`;
+    if (focus) $('#app-order-step-title').focus();
+  }
+
+  function setError(name, text) {
+    const error = $(`#app-order-${name}-error`);
+    if (error) error.textContent = text;
+    const input = $(`#app-order-${name}`);
+    if (input) input.setAttribute('aria-invalid', text ? 'true' : 'false');
+  }
+
+  function validStep() {
+    const errors = {};
+    if (wizard.step === 0 && !selection().okved.length) errors.okved = 'Выберите хотя бы один код ОКВЭД, чтобы продолжить.';
+    if (wizard.step === 1) {
+      if ((wizard.name.match(/\p{L}/gu) || []).length < 2) errors.name = 'Введите имя: хотя бы две буквы.';
+      const digits = wizard.phone.replace(/\D/g, '');
+      if (!/^[+\d\s()–-]+$/.test(wizard.phone) || digits.length < 10 || digits.length > 15) errors.phone = 'Введите телефон: от 10 до 15 цифр, например +7 (000) 000-00-00.';
+      if ((wizard.city.match(/\p{L}/gu) || []).length < 2) errors.city = 'Укажите город: хотя бы две буквы.';
+      if (wizard.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wizard.email.trim())) errors.email = 'Проверьте почту. Пример: demo@example.com. Или оставьте поле пустым.';
+      ['name', 'phone', 'city', 'email'].forEach(name => setError(name, ''));
+    }
+    if (wizard.step === 2) {
+      if (!Object.hasOwn(kepWays, wizard.kep)) errors.kep = 'Выберите способ получения КЭП.';
+      if (!Object.hasOwn(callTimes, wizard.callTime)) errors.callTime = 'Выберите время звонка.';
+    }
+    if (wizard.step === 3 && !wizard.consent) errors.consent = 'Для демо-отправки нужно ваше согласие.';
+    Object.entries(errors).forEach(([name, text]) => setError(name, text));
+    if (Object.keys(errors).length) {
+      const first = Object.keys(errors)[0];
+      (first === 'okved' ? $('#app-order-okved-62-01') : $(`#app-order-${first}`)).focus();
+      return false;
+    }
+    return true;
+  }
+
+  function submitOrder(event) {
+    event.preventDefault();
+    if (!validStep()) return;
+    if (wizard.step < 3) {
+      wizard.step += 1;
+      renderOrder(true);
+      return;
+    }
+    serial += 1;
+    const now = new Date().toISOString();
+    const number = `БК-2026-${String((Date.now() % 9000 + serial) % 10000).padStart(4, '0')}`;
+    BK.state.order = {
+      number, date: now, step: 0,
+      data: { name: wizard.name.trim(), phone: wizard.phone.trim(), city: wizard.city.trim(), email: wizard.email.trim(), kep: wizard.kep, callTime: wizard.callTime, consent: true, selection: selection() },
+      events: [{ date: now, text: stages[0] }], payments: [], messages: []
+    };
+    completed = true;
+    wizard.step = 0;
+    wizard.consent = false;
+    activeTab = 'status';
+    renderOrder(true);
+  }
+
+  function dateLabel(date) {
+    return new Date(date).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  function currentOrder() {
+    if (BK.state.order) return BK.state.order;
+    if (!sampleOrder) {
+      const date = new Date().toISOString();
+      sampleOrder = { number: 'БК-2026-0000', date, step: 0, data: { name: 'Пример Предпринимателя', selection: { ...defaults, extras: [], okved: ['62.01'] } }, events: [{ date, text: stages[0] }], payments: [], messages: [] };
+    }
+    return sampleOrder;
+  }
+
+  function prepareOrder(order) {
+    order.step = Number.isInteger(order.step) ? Math.max(0, Math.min(5, order.step)) : 0;
+    if (!Array.isArray(order.events)) order.events = [{ date: order.date, text: stages[0] }];
+    if (!Array.isArray(order.payments)) order.payments = [];
+    if (!Array.isArray(order.messages)) order.messages = [];
+    if (!order.data) order.data = { name: 'Демо-заявитель', selection: selection() };
+    if (!order.data.selection) order.data.selection = selection();
+    return order;
+  }
+
+  function trackerHTML(order) {
+    return `<ol class="app-tracker" aria-label="Путь заявки">${stages.map((name, index) => `<li${index <= order.step ? ' class="app-track-done"' : ''}${index === order.step ? ' aria-current="step"' : ''}><strong>${name}</strong><small>${index < order.step ? 'Готово · демо' : index === order.step ? 'Текущий статус · демо' : 'Впереди'}</small></li>`).join('')}</ol>`;
+  }
+
+  function accountHTML(order) {
+    return `<article class="sheet app-sheet"><div class="app-sheet-head"><strong class="app-sheet-title">РЕКВИЗИТЫ СЧЁТА</strong><span class="app-sample">ОБРАЗЕЦ</span></div><dl class="app-review"><dt>Получатель</dt><dd>${esc(order.data.name)}</dd><dt>Банк</dt><dd>банк-партнёр бюро (вымышленный)</dd><dt>Номер счёта</dt><dd class="mono">ОБРАЗЕЦ · ДЕМО-СЧЁТ-0000</dd><dt>Тариф</dt><dd>${esc(price('rko', order.data.selection.rko).name)}</dd></dl><p class="app-hint">Номер явно фиктивный. Для переводов не подходит.</p></article>`;
+  }
+
+  function statusHTML(order) {
+    return `<div class="app-status-grid"><div>${trackerHTML(order)}<button class="btn btn-primary" type="button" data-app-action="advance"${order.step === 5 ? ' disabled' : ''}>${order.step === 5 ? 'Все шаги пройдены' : 'Следующий шаг (демо)'}</button><p class="app-hint" role="status">${order.step === 5 ? 'Демо завершено. Можно открыть документы, попробовать платёж или написать бюро.' : 'Каждое нажатие сразу меняет статус. Реальных действий нет.'}</p></div><div><h2 class="h3">Лента событий</h2><ul class="app-events" aria-live="polite">${[...order.events].reverse().map(item => `<li><time datetime="${esc(item.date)}">${esc(dateLabel(item.date))}</time>${esc(item.text)}</li>`).join('')}</ul></div></div>${order.step >= 4 ? `<div class="app-note">${sheetHTML(order.data.selection, { person: order.data.name, registry: true, stamp: 'ЗАРЕГИСТРИРОВАНО', animate: order.step === 4 })}</div>` : ''}${order.step === 5 ? accountHTML(order) : ''}`;
+  }
+
+  function documentsHTML(order) {
+    return `<h2 class="h3">Документы заявки</h2><p class="muted">Готовые образцы открываются здесь, без скачивания.</p><ul class="app-doc-list">${documents.map(doc => `<li><div><strong>${doc.name}</strong><small>${order.step >= doc.step ? 'Готов · учебный образец' : `Появится на этапе «${stages[doc.step]}»`}</small></div><button type="button" class="btn btn-ghost" data-app-document="${doc.id}"${order.step < doc.step ? ' disabled' : ''}>Открыть<span class="app-hint"> · ${doc.id === 'registry' ? 'лист' : doc.id === 'account' ? 'счёт' : 'образец'}</span></button></li>`).join('')}</ul>`;
+  }
+
+  function accountTabHTML(order) {
+    return `<h2 class="h3">Учебный счёт</h2><p class="muted">Баланс образца</p><p class="app-balance">0 ₽</p>${order.step < 5 ? '<p class="app-note">Счёт пока не открыт. Пройдите шаги во вкладке «Статус». После последнего шага появятся образец реквизитов и форма демо-платежа.</p>' : `${accountHTML(order)}<h3 class="h3">Попробовать платёж</h3><p class="muted">Платёж только добавляет запись в историю. Баланс остаётся нулевым. Реальные реквизиты не нужны.</p><form id="app-payment-form" novalidate><div class="app-fields"><div class="field app-field"><label for="app-payment-amount">Сумма, ₽</label><input type="number" inputmode="decimal" min="0.01" step="0.01" max="1000000" id="app-payment-amount" name="amount" required aria-describedby="app-payment-amount-error"><span class="app-error" id="app-payment-amount-error" role="status"></span></div><div class="field app-field"><label for="app-payment-purpose">Назначение учебного платежа</label><input id="app-payment-purpose" name="purpose" maxlength="180" required placeholder="Например, тестовая покупка бумаги" aria-describedby="app-payment-purpose-error"><span class="app-error" id="app-payment-purpose-error" role="status"></span></div></div><button type="submit" class="btn btn-primary">Добавить демо-платёж</button></form>`}<h3 class="h3">История операций</h3><ul class="app-events" aria-live="polite">${order.payments.length ? [...order.payments].reverse().map(item => `<li><time datetime="${esc(item.date)}">${esc(dateLabel(item.date))}</time><strong>${esc(BK.rub(item.amount))}</strong> · ${esc(item.purpose)}<small class="app-hint"> · ДЕМО, деньги не списаны</small></li>`).join('') : '<li>Операций пока нет.</li>'}</ul>`;
+  }
+
+  function messagesHTML(order) {
+    return `<h2 class="h3">Переписка с бюро</h2><p class="muted">Демонстрация переписки. Ответ приходит автоматически.</p><div class="app-messages" role="log" aria-label="Сообщения">${order.messages.length ? order.messages.map(item => `<article class="app-message" data-author="${item.author}"><strong>${item.author === 'you' ? 'Вы' : 'Бюро · автоответ'}</strong><p>${esc(item.text)}</p><time datetime="${esc(item.date)}">${esc(dateLabel(item.date))}</time></article>`).join('') : '<p>Напишите вопрос, чтобы попробовать переписку.</p>'}</div><form id="app-message-form" novalidate><div class="field app-field"><label for="app-message-text">Ваше сообщение</label><textarea id="app-message-text" name="message" maxlength="1000" required aria-describedby="app-message-error"></textarea><span class="app-error" id="app-message-error" role="status"></span></div><button class="btn btn-primary" type="submit">Отправить в демо</button></form><p id="app-message-notice" class="app-hint" role="status"></p>`;
+  }
+
+  function renderCabinet() {
+    const order = prepareOrder(currentOrder());
+    const example = !BK.state.order;
+    const root = $('#app-cabinet-root');
+    const intro = `<div class="app-section-head"><div><span class="${example ? 'app-sample' : 'pill'}">${example ? 'ПРИМЕР' : 'ДЕМО-ЗАЯВКА'}</span><p class="mono">${esc(order.number)} · ${esc(dateLabel(order.date))}</p></div>${example ? `<div class="app-actions"><a class="btn btn-primary" href="#order" data-app-action="own-order">Оформить свою</a><button type="button" class="btn btn-ghost" data-app-action="sample">${sampleExpanded ? 'Скрыть пример' : 'Показать пример'}</button></div>` : '<a href="#order" class="btn btn-ghost" data-app-action="own-order">Новая заявка</a>'}</div>`;
+    if (example && !sampleExpanded) {
+      root.innerHTML = `${intro}<p class="app-note">У вас пока нет заявки. Ниже — пример пути предпринимателя. Нажмите «Показать пример», чтобы двигать статусы и попробовать кабинет.</p>${trackerHTML(order)}`;
+      return;
+    }
+    const tabs = { status: 'Статус', documents: 'Документы', account: 'Счёт', messages: 'Сообщения' };
+    const renderers = { status: statusHTML, documents: documentsHTML, account: accountTabHTML, messages: messagesHTML };
+    root.innerHTML = `${intro}<div class="app-tabs" role="tablist" aria-label="Разделы кабинета">${Object.entries(tabs).map(([id, name]) => `<button type="button" role="tab" class="app-tab" id="app-tab-${id}" data-app-tab="${id}" aria-controls="app-cabinet-panel" aria-selected="${activeTab === id}" tabindex="${activeTab === id ? '0' : '-1'}">${name}</button>`).join('')}</div><div class="app-panel" id="app-cabinet-panel" role="tabpanel" aria-labelledby="app-tab-${activeTab}" tabindex="0">${renderers[activeTab](order)}</div>`;
+  }
+
+  function openDocument(id, button) {
+    const order = prepareOrder(currentOrder());
+    const doc = documents.find(item => item.id === id);
+    if (!doc || order.step < doc.step) return;
+    modalReturn = button;
+    $('#app-document-title').textContent = doc.name;
+    const content = id === 'account' ? accountHTML(order) : sheetHTML(order.data.selection, { person: order.data.name, registry: id === 'registry', stamp: id === 'registry' ? 'ЗАРЕГИСТРИРОВАНО' : 'УЧЕБНЫЙ ОБРАЗЕЦ' });
+    $('#app-document-content').innerHTML = `<p class="app-note">ОБРАЗЕЦ · ${esc(doc.name)}. Здесь показан состав выбранного пакета. Это не официальная форма.</p>${content}`;
+    $('#app-document-modal').hidden = false;
+    document.body.classList.add('app-modal-open');
+    $('#app-document-close').focus();
+  }
+
+  function closeDocument(restore = true) {
+    $('#app-document-modal').hidden = true;
+    document.body.classList.remove('app-modal-open');
+    if (restore && modalReturn && modalReturn.isConnected) modalReturn.focus();
+    modalReturn = null;
+  }
+
+  function advance() {
+    const order = prepareOrder(currentOrder());
+    if (order.step >= 5) return;
+    order.step += 1;
+    order.events.push({ date: new Date().toISOString(), text: stages[order.step] });
+    renderCabinet();
+    const button = $('[data-app-action="advance"]', $('#app-cabinet-root'));
+    if (!button.disabled) button.focus(); else $('#app-cabinet-panel').focus();
+    BK.toast(`${stages[order.step]} · демонстрация`);
+  }
+
+  function payment(event) {
+    event.preventDefault();
+    const order = prepareOrder(currentOrder());
+    if (order.step < 5) return;
+    const amountInput = $('#app-payment-amount');
+    const purposeInput = $('#app-payment-purpose');
+    const raw = amountInput.value.trim().replace(',', '.');
+    const amount = Number(raw);
+    const amountError = !/^\d+(?:[.,]\d{1,2})?$/.test(raw) || !Number.isFinite(amount) || amount <= 0 || amount > 1000000 ? 'Введите сумму от 0,01 до 1 000 000 ₽, не больше двух знаков после запятой.' : '';
+    const purpose = purposeInput.value.trim();
+    const purposeError = purpose.length < 3 ? 'Напишите назначение: хотя бы три символа.' : '';
+    $('#app-payment-amount-error').textContent = amountError;
+    $('#app-payment-purpose-error').textContent = purposeError;
+    amountInput.setAttribute('aria-invalid', String(Boolean(amountError)));
+    purposeInput.setAttribute('aria-invalid', String(Boolean(purposeError)));
+    if (amountError || purposeError) { (amountError ? amountInput : purposeInput).focus(); return; }
+    order.payments.push({ date: new Date().toISOString(), amount, purpose });
+    renderCabinet();
+    $('#app-payment-amount').focus();
+    BK.toast('Демо-платёж добавлен в историю. Деньги не списаны.');
+  }
+
+  function sendMessage(event) {
+    event.preventDefault();
+    const input = $('#app-message-text');
+    const text = input.value.trim();
+    if (!text || text.length > 1000) {
+      $('#app-message-error').textContent = 'Напишите сообщение от 1 до 1000 символов.';
+      input.setAttribute('aria-invalid', 'true');
+      input.focus();
+      return;
+    }
+    const order = prepareOrder(currentOrder());
+    const date = new Date().toISOString();
+    order.messages.push({ author: 'you', text, date }, { author: 'bureau', text: 'Бюро получило ваше сообщение в демо. Документы и статусы можно посмотреть в соседних вкладках. Это автоматический ответ; сообщение никуда не отправлялось.', date });
+    renderCabinet();
+    const log = $('.app-messages', $('#app-cabinet-root'));
+    log.scrollTop = log.scrollHeight;
+    $('#app-message-text').focus();
+    $('#app-message-notice').textContent = 'Сообщение добавлено. Бюро прислало автоматический ответ.';
+  }
+
+  function resetSelection() {
+    Object.assign(BK.state, { ...defaults, extras: [], okved: [] });
+  }
+
+  $('#app-calc-form').addEventListener('submit', event => event.preventDefault());
+  $('#app-calc-reset').addEventListener('click', () => {
+    resetSelection();
+    renderCalc();
+    BK.toast('Выбор возвращён к значениям по умолчанию.');
+  });
+  $('#app-demo-reset').addEventListener('click', () => {
+    closeDocument(false);
+    resetSelection();
+    BK.state.order = null;
+    sampleOrder = null;
+    sampleExpanded = false;
+    activeTab = 'status';
+    wizard = freshWizard();
+    completed = false;
+    renderCabinet();
+    BK.toast('Демо сброшено. Заявка, контакты и история удалены из памяти.');
+  });
+  $('#app-document-close').addEventListener('click', () => closeDocument());
+  $('#app-document-modal').addEventListener('click', event => { if (event.target === event.currentTarget) closeDocument(); });
+
+  const appViews = $$('[data-view="calc"], [data-view="order"], [data-view="cabinet"]');
+  appViews.forEach(view => {
+    view.addEventListener('input', event => {
+      const input = event.target;
+      if (!input.dataset.appDraft) return;
+      wizard[input.dataset.appDraft] = input.type === 'checkbox' ? input.checked : input.value;
+      setError(input.dataset.appDraft, '');
+    });
+    view.addEventListener('change', event => {
+      const input = event.target;
+      if (input.dataset.appChoice) updateChoice(input);
+      if (input.dataset.appDraft) {
+        wizard[input.dataset.appDraft] = input.type === 'checkbox' ? input.checked : input.value;
+        setError(input.dataset.appDraft, '');
+      }
+    });
+    view.addEventListener('submit', event => {
+      if (event.target.id === 'app-order-form') submitOrder(event);
+      if (event.target.id === 'app-payment-form') payment(event);
+      if (event.target.id === 'app-message-form') sendMessage(event);
+    });
+    view.addEventListener('click', event => {
+      const button = event.target.closest('[data-app-action], [data-app-tab], [data-app-document]');
+      if (!button || button.disabled) return;
+      if (button.dataset.appTab) {
+        activeTab = button.dataset.appTab;
+        renderCabinet();
+        $(`#app-tab-${activeTab}`).focus();
+      } else if (button.dataset.appDocument) openDocument(button.dataset.appDocument, button);
+      else {
+        const action = button.dataset.appAction;
+        if (action === 'back') { wizard.step = Math.max(0, wizard.step - 1); renderOrder(true); }
+        if (action === 'new-order' || action === 'own-order') { completed = false; wizard.step = 0; renderOrder(action === 'new-order'); }
+        if (action === 'sample') { sampleExpanded = !sampleExpanded; renderCabinet(); $('[data-app-action="sample"]', $('#app-cabinet-root')).focus(); }
+        if (action === 'advance') advance();
+      }
+    });
+  });
+
+  document.addEventListener('keydown', event => {
+    const modal = $('#app-document-modal');
+    if (!modal.hidden) {
+      if (event.key === 'Escape') { event.preventDefault(); closeDocument(); }
+      if (event.key === 'Tab') {
+        const focusable = $$('button:not([disabled]), a[href], input, select, textarea, [tabindex="0"]', modal);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+      return;
+    }
+    const tab = event.target instanceof Element ? event.target.closest('[data-app-tab]') : null;
+    if (!tab || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    const ids = ['status', 'documents', 'account', 'messages'];
+    const index = ids.indexOf(activeTab);
+    activeTab = ids[event.key === 'Home' ? 0 : event.key === 'End' ? 3 : (index + (event.key === 'ArrowRight' ? 1 : 3)) % 4];
+    renderCabinet();
+    $(`#app-tab-${activeTab}`).focus();
+  });
+
+  normalize();
+  BK.onView(view => {
+    document.body.classList.toggle('app-calc-active', view === 'calc');
+    if (view !== 'order') completed = false;
+    if (view !== 'cabinet') closeDocument(false);
+    if (view === 'calc') renderCalc();
+    if (view === 'order') {
+      if (!selection().okved.length) wizard.step = 0;
+      renderOrder();
+    }
+    if (view === 'cabinet') renderCabinet();
+  });
+  // Also cover a router which displayed its initial hash before subscriptions.
+  const initialView = location.hash.slice(1);
+  if (initialView === 'calc') renderCalc();
+  if (initialView === 'order') renderOrder();
+  if (initialView === 'cabinet') renderCabinet();
+}());
+
+</script>
