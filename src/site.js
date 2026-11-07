@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  const { PRICES, rub } = window.BK;
-  const BK = window.BK;
+  const { PRICES, rub } = window.Kyday;
+  const Kyday = window.Kyday;
   const arrow = '<svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 16 16 4M4 4h12v12"/></svg>';
   const payments = plan => Number.isFinite(plan.freePayments) ? plan.freePayments + ' в пакете, затем ' + rub(plan.paymentPrice) + ' за платёж' : 'Без лимита';
   const withdrawal = plan => 'До ' + rub(plan.withdrawalLimit) + '/мес ' + (plan.withdrawalRate ? 'под ' + String(plan.withdrawalRate).replace('.', ',') + '%' : 'без комиссии');
@@ -34,15 +34,15 @@
   function updateHome() {
     const tax = document.getElementById('home-tax');
     const account = document.getElementById('home-account');
-    if (tax && [...tax.options].some(option => option.value === BK.state.tax)) tax.value = BK.state.tax;
-    if (account && Object.hasOwn(PRICES.rko, BK.state.rko)) account.value = BK.state.rko;
+    if (tax && [...tax.options].some(option => option.value === Kyday.state.tax)) tax.value = Kyday.state.tax;
+    if (account && Object.hasOwn(PRICES.rko, Kyday.state.rko)) account.value = Kyday.state.rko;
   }
   ['home-tax', 'home-account'].forEach(id => document.getElementById(id)?.addEventListener('change', event => {
     const input = event.currentTarget;
-    if (id === 'home-tax') BK.state.tax = input.value;
-    else BK.state.rko = input.value;
+    if (id === 'home-tax') Kyday.state.tax = input.value;
+    else Kyday.state.rko = input.value;
     const tax = document.getElementById('home-tax');
-    const plan = PRICES.rko[BK.state.rko];
+    const plan = PRICES.rko[Kyday.state.rko];
     document.getElementById('home-sheet-status').textContent = 'Лист обновлён: ' + tax.options[tax.selectedIndex].text + ', счёт «' + plan.name + '». Выбор перенесён в калькулятор. Это образец.';
   }));
 
@@ -71,8 +71,8 @@
     });
   });
   document.querySelectorAll('[data-tax-choose]').forEach(button => button.addEventListener('click', () => {
-    BK.state.tax = button.dataset.taxChoose;
-    BK.go('calc');
+    Kyday.state.tax = button.dataset.taxChoose;
+    Kyday.go('calc');
   }));
 
   const countInput = document.getElementById('rko-payments');
@@ -124,12 +124,13 @@
     const topic = document.getElementById('contact-topic');
     const name = document.getElementById('contact-name');
     const message = document.getElementById('contact-message');
+    const phone = document.getElementById('contact-phone');
     const consent = document.getElementById('contact-consent');
-    const fields = [[topic, topic.value !== ''], [name, name.value.trim().length >= 2], [message, message.value.trim().length >= 10], [consent, consent.checked]];
+    const fields = [[topic, topic.value !== ''], [name, name.value.trim().length >= 2], [phone, /^\+?[\d\s()\-]+$/.test(phone.value.trim()) && phone.value.replace(/\D/g, '').length >= 10 && phone.value.replace(/\D/g, '').length <= 15], [message, message.value.trim().length >= 10], [consent, consent.checked]];
     fields.forEach(([field, valid]) => field.setAttribute('aria-invalid', String(!valid)));
     const invalid = fields.find(([, valid]) => !valid);
     if (invalid) {
-      document.getElementById('contact-error').textContent = 'Выберите тему, укажите имя от двух символов, вопрос от 10 символов и подтвердите согласие.';
+      document.getElementById('contact-error').textContent = 'Выберите тему, укажите имя от двух символов, телефон от 10 до 15 цифр, вопрос от 10 символов и подтвердите согласие.';
       invalid[0].focus(); return;
     }
     document.getElementById('contact-error').textContent = '';
@@ -146,9 +147,9 @@
     document.getElementById('contact-topic').focus();
   });
 
-  BK.onView(view => {
+  Kyday.onView(view => {
     if (view === 'home') updateHome();
-    if (view === 'ip') selectTab(BK.state.tax);
+    if (view === 'ip') selectTab(Kyday.state.tax);
     if (view === 'rko') calculateRko();
     if (view === 'faq') filterFaq();
   });

@@ -22,7 +22,7 @@
       close: { name: 'Закрытие ИП', price: 1900, monthly: false }
     }
   };
-  const titles = { home: 'ИП и счёт — с понятного старта', ip: 'Регистрация ИП', rko: 'Расчётный счёт', prices: 'Цены', faq: 'Вопросы и ответы', about: 'О бюро', contacts: 'Контакты', calc: 'Собрать старт', order: 'Оформить демо-заявку', cabinet: 'Демо-кабинет', notfound: 'Раздел не найден' };
+  const titles = { home: 'ИП и счёт — с понятного старта', ip: 'Регистрация ИП', rko: 'Расчётный счёт', prices: 'Цены', faq: 'Вопросы и ответы', about: 'О Kyday', contacts: 'Контакты', calc: 'Собрать старт', order: 'Оформить заявку', cabinet: 'Мои заявки', notfound: 'Раздел не найден' };
   const callbacks = new Set();
   let currentView = null;
   let toastTimer;
@@ -60,7 +60,7 @@
     closeModal(false);
     currentView = active.dataset.view;
     views.forEach(el => { el.hidden = el !== active; });
-    document.title = currentView === 'home' ? 'Бюро Кудайбердина — ИП и счёт' : (titles[currentView] || currentView) + ' — Бюро Кудайбердина';
+    document.title = currentView === 'home' ? 'Kyday — ИП и счёт' : (titles[currentView] || currentView) + ' — Kyday';
     document.querySelectorAll('[data-nav] a[href^="#"]').forEach(link => {
       if (link.getAttribute('href') === '#' + currentView) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -123,7 +123,7 @@
     }
   }
 
-  window.BK = { PRICES, rub, go, toast, openCallback, copy, state, onView(fn) { callbacks.add(fn); if (currentView) fn(currentView); return () => callbacks.delete(fn); } };
+  window.Kyday = { PRICES, rub, go, toast, openCallback, copy, state, onView(fn) { callbacks.add(fn); if (currentView) fn(currentView); return () => callbacks.delete(fn); } };
 
   const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
   function isDark() { return document.documentElement.dataset.theme === 'dark' || (!document.documentElement.dataset.theme && colorScheme.matches); }
@@ -134,7 +134,7 @@
     toggle.setAttribute('aria-label', isDark() ? 'Включить светлую тему' : 'Включить тёмную тему');
     toggle.querySelector('[data-theme-label]').textContent = isDark() ? 'Светлая' : 'Тёмная';
   }
-  try { const saved = localStorage.getItem('bk-theme'); if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved; } catch { /* Тема работает и без хранилища. */ }
+  try { const saved = localStorage.getItem('kyday-theme'); if (saved === 'light' || saved === 'dark') document.documentElement.dataset.theme = saved; } catch { /* Тема работает и без хранилища. */ }
 
   document.addEventListener('click', event => {
     const target = event.target.closest('button, a, [data-modal-backdrop]');
@@ -150,7 +150,7 @@
     else if (target.id === 'theme-toggle') {
       const theme = isDark() ? 'light' : 'dark';
       document.documentElement.dataset.theme = theme;
-      try { localStorage.setItem('bk-theme', theme); } catch { /* Необязательное сохранение. */ }
+      try { localStorage.setItem('kyday-theme', theme); } catch { /* Необязательное сохранение. */ }
       themeLabel();
     } else if (target.id === 'menu-toggle') {
       const open = target.getAttribute('aria-expanded') !== 'true';
